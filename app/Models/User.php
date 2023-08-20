@@ -51,15 +51,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->first_name . ' '. $this->last_name;
     }
 
-    public function statusWithLabel()
-    {
-        switch ($this->status) {
-            case 1: $result = '<label class="badge bg-success text-white">'.trans('site.active').'</label>'; break;
-            case 0: $result = '<label class="badge bg-danger text-white">'.trans('site.in_active').'</label>'; break;
-        }
-        return $result;
-    }
-
     public function getJWTIdentifier(){
         return $this->getKey();
     }

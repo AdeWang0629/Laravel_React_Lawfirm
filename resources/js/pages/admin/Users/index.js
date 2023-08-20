@@ -1,16 +1,24 @@
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import { Index } from './index.styled';
-import Button from '@mui/material/Button';
+import {
+    Typography,
+    Breadcrumbs,
+    Button,
+    Card,
+    Chip,
+    Link
+} from '@mui/material';
+import {
+    Box,
+    Grid,
+    Stack
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import SaveAsIcon from '@mui/icons-material/SaveAs';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import Card from '@mui/material/Card';
 
 import { styled } from '@mui/material/styles';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -26,6 +34,14 @@ import actions from '../../../redux/Admin/User/actions';
 import { grey } from '@mui/material/colors';
 
 import { NavLink } from 'react-router-dom';
+
+import { username_item, formate_date } from '../../../helpers';
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 //Table Style
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -51,32 +67,57 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function index(){
     const dispatch = useDispatch();
     const [rows, setRows] = useState([]);
-    const data = useSelector((state)=> state.adminHomeReducer);
+    const data = useSelector((state)=> state.userReducer);
 
     useEffect(()=>{
         dispatch({
-            type: actions.GETUSER
+            type: actions.GETUSERS
         });
     },[]);
 
     useEffect(()=>{
-
+        setRows(data.usersData);
     });
+
+    const userShowLinkClick = (id) => {
+        dispatch({
+            type: actions.SHOWUSER,
+            payload: id
+        });
+    }
+
+    const userDeleteLinkClick = (data) => {
+        dispatch({
+            type: actions.DELETEUSER,
+            payload: data.row.id
+        });
+        setOpen(false);
+    }
+
+    const [open, setOpen] = useState(false);
+    const [row, setRow] = useState();
+
+    const handleClickOpen = (row) => {
+      setOpen(true);
+      setRow(row);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     return (
         <Index>
             <Box sx={{ bgcolor: 'background.paper', minHeight: '90vh' }}>
-                <Box sx={{ flexGrow: 1, bgcolor: grey[100], minHeight: 60 }}>
-                    <Grid container>
-                        <Grid item xs={3}>
+                <Box sx={{ flexGrow: 1, bgcolor: grey[100], minHeight: 60}}>
+                    <Grid container justifyContent="space-between">
+                        <Grid item>
                             <Breadcrumbs aria-label="breadcrumb">
                                 <Typography color="text.primary" variant='h5'>Table</Typography>
                                 <Typography>Users</Typography>
                             </Breadcrumbs>
                         </Grid>
-                        <Grid item xs={7.7}>
-                        </Grid>
-                        <Grid item xs={1.3}>
+                        <Grid item style={{marginBottom: 10}}>
                             <NavLink to="/users/create">
                                 <Button variant="contained" color='secondary'>
                                     Add new User
@@ -100,25 +141,43 @@ export default function index(){
                                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                     <TableHead>
                                     <TableRow>
-                                        <StyledTableCell align="right">FULL NAME</StyledTableCell>
-                                        <StyledTableCell align="right">NAME USER</StyledTableCell>
-                                        <StyledTableCell align="right">EMAIL</StyledTableCell>
-                                        <StyledTableCell align="right">ACTIONS</StyledTableCell>
-                                        <StyledTableCell align="right">CREATED DATE</StyledTableCell>
+                                        <StyledTableCell align="center">FULL NAME</StyledTableCell>
+                                        <StyledTableCell align="center">USER NAME</StyledTableCell>
+                                        <StyledTableCell align="center">EMAIL</StyledTableCell>
+                                        <StyledTableCell align="center">ACTIONS</StyledTableCell>
+                                        <StyledTableCell align="center">CREATED DATE</StyledTableCell>
                                     </TableRow>
                                     </TableHead>
                                     <TableBody>
                                     {rows.map((row) => (
                                         <StyledTableRow key={row.id}>
-                                            <StyledTableCell align="right">{row.user_name}</StyledTableCell>
-                                            <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                                            <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                                            <StyledTableCell align="right">
-                                                <Button variant="contained" color="error"><DeleteIcon/></Button>
-                                                <Button variant="contained" color="success"><SaveAsIcon/></Button>
-                                                <Button variant="contained"><VisibilityIcon/></Button>
+                                            <StyledTableCell align="center">
+                                                <Stack >
+                                                    <Typography mb={1}>{row.first_name} {row.last_name}</Typography>
+                                                    {
+                                                        row.status == 1 ?
+                                                        (<Chip label="Acitve" color="success" size="small" style={{width: 60, margin:'auto'}} />) :
+                                                        (<Chip label="InActive" color="primary" size="small" variant="outlined" style={{width: 80, margin:'auto'}} />)
+                                                    }
+                                                </Stack>          
                                             </StyledTableCell>
-                                            <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                                            <StyledTableCell align="center">
+                                                <Box style={{color: '#0162e8', cursor: 'pointer'}} onClick={() => userShowLinkClick(row.id)}>
+                                                    <Typography>
+                                                        {row.user_name}
+                                                    </Typography>
+                                                </Box>
+                                                <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
+                                                    { username_item(row.roles) }
+                                                </Stack>
+                                            </StyledTableCell>
+                                            <StyledTableCell align="center">{row.email}</StyledTableCell>
+                                            <StyledTableCell align="center">
+                                                <VisibilityIcon color="secondary" style={{ cursor: 'pointer', marginRight: 10}} onClick={() => userShowLinkClick(row.id)}/>
+                                                <NavLink to={`/users/${row.id}/edit`}><EditIcon color="success" style={{ marginRight: 10}}/></NavLink>
+                                                <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => handleClickOpen(row)} />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="center">{formate_date(row.created_at)}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                     </TableBody>
@@ -127,6 +186,28 @@ export default function index(){
                         </Box>
                     </Card>
                 </Box>
+
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                    {"Delete User"}
+                    </DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Are you sure for delete ({row ? row.user_name : ''})?
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={() => userDeleteLinkClick({row})} autoFocus color='error'>
+                        Delete
+                    </Button>
+                    </DialogActions>
+                </Dialog>
             </Box>
         </Index>
     );

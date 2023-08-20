@@ -29,11 +29,11 @@ import { useTheme } from '@mui/material/styles';
 
 // project imports
 import useScriptRef from '../../../hooks/useScriptRef';
-
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 export default function create({...others}){
-    const dispatch = useDispatch();
-
     const theme = useTheme();
     const scriptedRef = useScriptRef();
 
@@ -42,7 +42,28 @@ export default function create({...others}){
         {label: 'User', id:2}
     ];
 
+    const data = useSelector((state)=>state.userReducer);
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const [userdata, setUserData] = useState([]);
+    
+    useEffect(() => {
+        setUserData(data.userData);
+    },[data]);
+
+    useEffect(()=>{
+        dispatch({
+            type: actions.GETUSER,
+            payload: id
+        });
+    },[]);
+
+    if(!userdata){
+        return;
+    }
+
     return (
+        
         <>
             <Box sx={{ bgcolor: 'background.paper'}}>
                 <Box sx={{ flexGrow: 1, bgcolor: grey[100], minHeight: 60 }}>
@@ -50,7 +71,7 @@ export default function create({...others}){
                         <Grid item xs={3}>
                             <Breadcrumbs aria-label="breadcrumb">
                                 <Typography color="text.primary" variant='h5'>Home</Typography>
-                                <Typography>Add new User</Typography>
+                                <Typography>Edit User</Typography>
                             </Breadcrumbs>
                         </Grid>
                         <Grid item xs={7.7}>
@@ -74,14 +95,14 @@ export default function create({...others}){
                         <Box mt={2}>
                             <Formik
                                 initialValues={{
-                                    first_name: '',
-                                    last_name: '',
-                                    email: '',
-                                    user_name: '',
+                                    first_name: data.userData ? data.userData.first_name : '',
+                                    last_name: data.userData ? data.userData.last_name : '',
+                                    email: data.userData ? data.userData.email : '',
+                                    user_name: data.userData ? data.userData.user_name : '',
                                     password: '',
                                     password_confirmation: '',
                                     roles_id: [],
-                                    status: 3,
+                                    status: data.userData ? data.userData.status : '',
                                     submit: null
                                 }}
                                 validationSchema={Yup.object().shape({
@@ -102,9 +123,12 @@ export default function create({...others}){
 
                                         const roleIds = values.roles_id.map(role => role.id);
                                         values.roles_id = roleIds;
+
+                                        console.log(values);
                                         dispatch({
-                                            type: actions.CREATEUSER,
+                                            type: actions.UPDATEUSER,
                                             payload: values,
+                                            id: id,
                                         });
                                     }
                                 } catch (err) {
@@ -128,6 +152,7 @@ export default function create({...others}){
                                                     id="outlined-adornment-first_name-user_create"
                                                     type="text"
                                                     name="first_name"
+                                                    value={values.first_name}
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
                                                     label="First name"
@@ -147,6 +172,7 @@ export default function create({...others}){
                                                     id="outlined-adornment-last_name-user_create"
                                                     type="text"
                                                     name="last_name"
+                                                    value={values.last_name}
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
                                                     label="Last name"
@@ -166,6 +192,7 @@ export default function create({...others}){
                                                     id="outlined-adornment-email-user_create"
                                                     type="email"
                                                     name="email"
+                                                    value={values.email}
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
                                                     label="Email"
@@ -186,6 +213,7 @@ export default function create({...others}){
                                                     id="outlined-adornment-user_name-user_create"
                                                     type="text"
                                                     name="user_name"
+                                                    value={values.user_name}
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
                                                     label="Name User"
@@ -294,7 +322,7 @@ export default function create({...others}){
 
                                     <Box sx={{ mt: 3 }}>
                                         <Button disableElevation disabled={isSubmitting} size="large" type="submit" variant="contained" color="secondary">
-                                            Add new User
+                                            Edit User
                                         </Button>
                                     </Box>
                                 </form>

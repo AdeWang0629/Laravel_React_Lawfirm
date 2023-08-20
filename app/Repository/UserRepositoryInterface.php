@@ -5,9 +5,6 @@ interface UserRepositoryInterface {
     // all users
     public function index();
 
-    // create user
-    public function create();
-
     // store user
     public function store($request);
 

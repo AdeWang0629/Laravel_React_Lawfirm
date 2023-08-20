@@ -74,15 +74,15 @@ export default function Sidebar({open}) {
       <List component="nav" aria-label="main mailbox folders" style={{textAlign: 'center'}}>
         { 
           open ? (
-            <Box sx={{minHeight: 172}}>
-              <Avatar sx={{ width: 100, height: 100, margin: 'auto', fontSize: 70 }}>H</Avatar>
+            <Box sx={{minHeight: 172, paddingTop: 2}}>
+              <Avatar sx={{ width: 80, height: 80, margin: 'auto', fontSize: 70 }}>H</Avatar>
               <Typography>{user.username}</Typography>
               <Typography>{user.email}</Typography>
               <Typography>Admin</Typography>
             </Box>
           ) : (
-            <Box sx={{minHeight: 172, paddingTop: 5 }}>
-              <Avatar sx={{ width: 60, height: 60, margin: 'auto', fontSize: 40 }}>H</Avatar>
+            <Box sx={{minHeight: 172, paddingTop: 5}}>
+              <Avatar sx={{ width: 40, height: 40, margin: 'auto', fontSize: 30, marginTop: 1 }}>H</Avatar>
               <Typography>Admin</Typography>
             </Box>
           )

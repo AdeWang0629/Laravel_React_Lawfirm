@@ -2161,6 +2161,63 @@ function createStack(options = {}) {
 
 /***/ }),
 
+/***/ "./resources/js/components/CustomCard.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/CustomCard.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CustomCard: () => (/* binding */ CustomCard)
+/* harmony export */ });
+/* harmony import */ var _mui_material_Card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mui/material/Card */ "./node_modules/@mui/material/Card/Card.js");
+/* harmony import */ var _mui_material_Stack__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/material/Stack */ "./node_modules/@mui/material/Stack/Stack.js");
+/* harmony import */ var _mui_material_Typography__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/material/Typography */ "./node_modules/@mui/material/Typography/Typography.js");
+/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mui/material/styles */ "./node_modules/@mui/material/styles/createTheme.js");
+/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mui/material/styles */ "./node_modules/@mui/material/styles/ThemeProvider.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+var Theme = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_1__["default"])({
+  typography: {
+    fontSize: 10
+  }
+});
+var CustomCard = function CustomCard(_ref) {
+  var bg_l_color = _ref.bg_l_color,
+    bg_r_color = _ref.bg_r_color,
+    h_text = _ref.h_text,
+    c_text = _ref.c_text;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_styles__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    theme: Theme,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      sx: {
+        backgroundImage: "linear-gradient(to left, ".concat(bg_l_color, ", ").concat(bg_r_color, ") !important"),
+        height: 80
+      },
+      className: "pl-3 pt-3 pr-3 pb-2 pt-0",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material_Stack__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          variant: "h6",
+          className: "text-white",
+          children: h_text
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          variant: "h4",
+          className: "text-white weight-7",
+          children: c_text
+        })]
+      })
+    })
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/pages/admin/Home/index.js":
 /*!************************************************!*\
   !*** ./resources/js/pages/admin/Home/index.js ***!
@@ -2171,26 +2228,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ index)
 /* harmony export */ });
-/* harmony import */ var _mui_material_Box__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mui/material/Box */ "./node_modules/@mui/material/Box/Box.js");
-/* harmony import */ var _mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/material/Grid */ "./node_modules/@mui/material/Grid/Grid.js");
-/* harmony import */ var _mui_material_Stack__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mui/material/Stack */ "./node_modules/@mui/material/Stack/Stack.js");
+/* harmony import */ var _mui_material_Box__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/material/Box */ "./node_modules/@mui/material/Box/Box.js");
+/* harmony import */ var _mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mui/material/Grid */ "./node_modules/@mui/material/Grid/Grid.js");
+/* harmony import */ var _mui_material_Stack__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @mui/material/Stack */ "./node_modules/@mui/material/Stack/Stack.js");
 /* harmony import */ var _index_styled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.styled */ "./resources/js/pages/admin/Home/index.styled.js");
-/* harmony import */ var _mui_material_Card__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mui/material/Card */ "./node_modules/@mui/material/Card/Card.js");
-/* harmony import */ var _mui_material_Typography__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @mui/material/Typography */ "./node_modules/@mui/material/Typography/Typography.js");
-/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/material/styles */ "./node_modules/@mui/material/styles/styled.js");
-/* harmony import */ var _mui_material_Table__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @mui/material/Table */ "./node_modules/@mui/material/Table/Table.js");
-/* harmony import */ var _mui_material_TableBody__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @mui/material/TableBody */ "./node_modules/@mui/material/TableBody/TableBody.js");
-/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/material/TableCell */ "./node_modules/@mui/material/TableCell/TableCell.js");
-/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mui/material/TableCell */ "./node_modules/@mui/material/TableCell/tableCellClasses.js");
-/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mui/material/TableContainer */ "./node_modules/@mui/material/TableContainer/TableContainer.js");
-/* harmony import */ var _mui_material_TableHead__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @mui/material/TableHead */ "./node_modules/@mui/material/TableHead/TableHead.js");
-/* harmony import */ var _mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mui/material/TableRow */ "./node_modules/@mui/material/TableRow/TableRow.js");
-/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mui/material/Paper */ "./node_modules/@mui/material/Paper/Paper.js");
+/* harmony import */ var _mui_material_Card__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mui/material/Card */ "./node_modules/@mui/material/Card/Card.js");
+/* harmony import */ var _mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mui/material/Typography */ "./node_modules/@mui/material/Typography/Typography.js");
+/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/material/styles */ "./node_modules/@mui/material/styles/styled.js");
+/* harmony import */ var _mui_material_Table__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @mui/material/Table */ "./node_modules/@mui/material/Table/Table.js");
+/* harmony import */ var _mui_material_TableBody__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @mui/material/TableBody */ "./node_modules/@mui/material/TableBody/TableBody.js");
+/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mui/material/TableCell */ "./node_modules/@mui/material/TableCell/TableCell.js");
+/* harmony import */ var _mui_material_TableCell__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mui/material/TableCell */ "./node_modules/@mui/material/TableCell/tableCellClasses.js");
+/* harmony import */ var _mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mui/material/TableContainer */ "./node_modules/@mui/material/TableContainer/TableContainer.js");
+/* harmony import */ var _mui_material_TableHead__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @mui/material/TableHead */ "./node_modules/@mui/material/TableHead/TableHead.js");
+/* harmony import */ var _mui_material_TableRow__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mui/material/TableRow */ "./node_modules/@mui/material/TableRow/TableRow.js");
+/* harmony import */ var _mui_material_Paper__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @mui/material/Paper */ "./node_modules/@mui/material/Paper/Paper.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _redux_Admin_Home_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../redux/Admin/Home/actions */ "./resources/js/redux/Admin/Home/actions.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_CustomCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/CustomCard */ "./resources/js/components/CustomCard.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2219,20 +2277,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
 //Table Style
 
 
-var StyledTableCell = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_5__["default"])(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_6__["default"])(function (_ref) {
+var StyledTableCell = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_6__["default"])(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_7__["default"])(function (_ref) {
   var _ref2;
   var theme = _ref.theme;
-  return _ref2 = {}, _defineProperty(_ref2, "&.".concat(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_7__["default"].head), {
+  return _ref2 = {}, _defineProperty(_ref2, "&.".concat(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_8__["default"].head), {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white
-  }), _defineProperty(_ref2, "&.".concat(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_7__["default"].body), {
+  }), _defineProperty(_ref2, "&.".concat(_mui_material_TableCell__WEBPACK_IMPORTED_MODULE_8__["default"].body), {
     fontSize: 14
   }), _ref2;
 });
-var StyledTableRow = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_5__["default"])(_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8__["default"])(function (_ref3) {
+var StyledTableRow = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_6__["default"])(_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_9__["default"])(function (_ref3) {
   var theme = _ref3.theme;
   return {
     '&:nth-of-type(odd)': {
@@ -2262,174 +2321,240 @@ function index() {
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
     setRows(data.lawsuites);
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_index_styled__WEBPACK_IMPORTED_MODULE_0__.Index, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_index_styled__WEBPACK_IMPORTED_MODULE_0__.Index, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
       sx: {
         bgcolor: 'background.paper',
-        minHeight: '90vh',
         padding: '10px 20px'
       },
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
         sx: {
           flexGrow: 1
         },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
           container: true,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          columns: {
+            xs: 2,
+            sm: 8,
+            md: 16
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 3,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Stack__WEBPACK_IMPORTED_MODULE_11__["default"], {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_12__["default"], {
+            xs: 2,
+            sm: 8,
+            md: 12.8,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Stack__WEBPACK_IMPORTED_MODULE_12__["default"], {
+              mt: 2,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
                 variant: "h4",
-                children: ["Hi, welcome back! ", user.username]
-              }), "Here are some quick statistics"]
+                children: ["Hi, welcome back! ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                  className: "orange",
+                  children: user.username
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                className: "text-secondary",
+                children: "Here are some quick statistics"
+              })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 6
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
-            item: true,
-            xs: 1.5,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-              children: ["Consultation counts", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+            xs: 2,
+            sm: 6.2,
+            md: 2.1,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Stack__WEBPACK_IMPORTED_MODULE_12__["default"], {
+              mt: 2,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                className: "text-secondary",
+                children: "Consultation counts"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                variant: "h5",
+                className: "text-secondary weight-7",
                 children: data.consultationsCount
               })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 1.5,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-              children: ["Cases counts", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+            xs: 2,
+            sm: 1.8,
+            md: 1.1,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Stack__WEBPACK_IMPORTED_MODULE_12__["default"], {
+              mt: 2,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                className: "text-secondary",
+                children: "Cases counts"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                variant: "h5",
+                className: "text-secondary weight-7",
                 children: data.caseSessionCount
               })]
             })
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
         sx: {
           flexGrow: 1
         },
         mt: 5,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
           container: true,
           columnSpacing: {
             xs: 1,
             sm: 2,
             md: 3
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          rowSpacing: {
+            xs: 1,
+            sm: 2,
+            md: 3
+          },
+          columns: {
+            xs: 2,
+            sm: 8,
+            md: 16
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 3,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_13__["default"], {
-              sx: {
-                backgroundColor: '#ff9800'
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                children: ["Payments Lawsuites", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
-                  children: data.lawsuitesPayments
-                })]
-              })
+            xs: 2,
+            sm: 4,
+            md: 4,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_CustomCard__WEBPACK_IMPORTED_MODULE_4__.CustomCard, {
+              bg_l_color: "#0db2de 0%",
+              bg_r_color: "#005bea 100%",
+              h_text: "Payments Lawsuites",
+              c_text: data.lawsuitesPayments
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 3,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_13__["default"], {
-              sx: {
-                backgroundColor: '#6fbf73'
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                children: ["Payments Consultations", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
-                  children: data.consultationPayments
-                })]
-              })
+            xs: 2,
+            sm: 4,
+            md: 4,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_CustomCard__WEBPACK_IMPORTED_MODULE_4__.CustomCard, {
+              bg_l_color: "#48d6a8 0%",
+              bg_r_color: "#029666",
+              h_text: "Payments Consultations",
+              c_text: data.consultationPayments
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 3,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_13__["default"], {
-              sx: {
-                backgroundColor: '#f6685e'
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                children: ["Numbers Clients", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
-                  children: data.consultationPayments
-                })]
-              })
+            xs: 2,
+            sm: 4,
+            md: 4,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_CustomCard__WEBPACK_IMPORTED_MODULE_4__.CustomCard, {
+              bg_l_color: "#f93a5a",
+              bg_r_color: "#f7778c",
+              h_text: "Numbers Clients",
+              c_text: data.consultationPayments
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 3,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_13__["default"], {
-              sx: {
-                backgroundColor: '#4dabf5'
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                children: ["Numbers Sessions", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
-                  children: data.caseSessionCount
-                })]
-              })
+            xs: 2,
+            sm: 4,
+            md: 4,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_CustomCard__WEBPACK_IMPORTED_MODULE_4__.CustomCard, {
+              bg_l_color: "#efa65f",
+              bg_r_color: "#f76a2d",
+              h_text: "Numbers Sessions",
+              c_text: data.caseSessionCount
             })
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_10__["default"], {
         sx: {
           flexGrow: 1
         },
         mt: 5,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
           container: true,
           columnSpacing: {
             xs: 1,
             sm: 2,
             md: 3
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          columns: {
+            xs: 6,
+            sm: 12,
+            md: 24
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
             item: true,
-            xs: 8,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_13__["default"], {
+            xs: 6,
+            sm: 4,
+            md: 8,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_14__["default"], {
+              style: {
+                height: '100%'
+              },
+              className: "p-2",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Stack__WEBPACK_IMPORTED_MODULE_12__["default"], {
+                mb: 1,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                  varient: "h4",
+                  mb: .5,
+                  className: "weight-7",
+                  children: "LAST OF PAYMENTS"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                  className: "text-secondary",
+                  children: "Here you will find the last Payments"
+                })]
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_11__["default"], {
+            item: true,
+            xs: 6,
+            sm: 8,
+            md: 16,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_14__["default"], {
               xs: {
                 display: 'flex'
               },
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_12__["default"], {
-                children: "LAST OF LAWSUITES"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_12__["default"], {
-                children: "Here you will find the last Lawsuites"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_14__["default"], {
-                component: _mui_material_Paper__WEBPACK_IMPORTED_MODULE_15__["default"],
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Table__WEBPACK_IMPORTED_MODULE_16__["default"], {
+              className: "p-2",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Stack__WEBPACK_IMPORTED_MODULE_12__["default"], {
+                mb: 1,
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                  varient: "h4",
+                  mb: .5,
+                  className: "weight-7",
+                  children: "LAST OF LAWSUITES"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_13__["default"], {
+                  className: "text-secondary",
+                  children: "Here you will find the last Lawsuites"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_TableContainer__WEBPACK_IMPORTED_MODULE_15__["default"], {
+                component: _mui_material_Paper__WEBPACK_IMPORTED_MODULE_16__["default"],
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Table__WEBPACK_IMPORTED_MODULE_17__["default"], {
                   sx: {
                     minWidth: 700
                   },
                   "aria-label": "customized table",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_17__["default"], {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_8__["default"], {
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_TableHead__WEBPACK_IMPORTED_MODULE_18__["default"], {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_TableRow__WEBPACK_IMPORTED_MODULE_9__["default"], {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                         align: "right",
                         children: "COURT"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                         align: "right",
                         children: "NAME CLIENT"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                         align: "right",
                         children: "CATEGORY LAWSUITE"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                         align: "right",
                         children: "LAWSUITE FILE NUMBER"
                       })]
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_18__["default"], {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_TableBody__WEBPACK_IMPORTED_MODULE_19__["default"], {
                     children: rows ? rows.map(function (row) {
-                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(StyledTableRow, {
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(StyledTableRow, {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                           align: "right",
                           children: row.case_number
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                           align: "right",
                           children: row.client.name
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                           align: "right",
                           children: row.case_type.name
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(StyledTableCell, {
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(StyledTableCell, {
                           align: "right",
                           children: row.court.name
                         })]
@@ -2438,21 +2563,6 @@ function index() {
                   })]
                 })
               })]
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Grid__WEBPACK_IMPORTED_MODULE_10__["default"], {
-            item: true,
-            xs: 4,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Card__WEBPACK_IMPORTED_MODULE_13__["default"], {
-              style: {
-                height: '100%'
-              },
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_12__["default"], {
-                  children: "LAST OF PAYMENTS"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_12__["default"], {
-                  children: "Here you will find the last Payments"
-                })]
-              })
             })
           })]
         })
@@ -2477,7 +2587,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var Index = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    * {\n    }\n"])));
+var Index = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n\n"])));
 
 /***/ })
 

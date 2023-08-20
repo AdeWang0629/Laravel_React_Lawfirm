@@ -13,20 +13,26 @@ export function getCustomRequest(URL) {
   }).then(response => response);
 }
 
+export function retriveCustomRequest(URL, payload){
+  return axios.get(`/${URL}/${payload}`,{
+    headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt_token') }
+  }).then(response => response);
+}
+
 export function postCustomRequest(URL, payload) {
   return axios.post(`/${URL}`,payload,{
     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt_token') }
   }).then(response => response);
 }
 
-export function putCustomRequest(URL,payload) {
-  return axios.put(`/${URL}`,payload,{
+export function putCustomRequest(URL, id ,payload) {
+  return axios.put(`/${URL}/${id}`,payload,{
     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt_token') }
   }).then(response => response);
 }
 
-export function deleteCustomRequest(URL) {
-  return axios.delete(`/${URL}`,{
+export function deleteCustomRequest(URL, id) {
+  return axios.delete(`/${URL}/${id}`,{
     headers: { 'Authorization': 'Bearer ' + localStorage.getItem('jwt_token') }
   }).then(response => response);
 }

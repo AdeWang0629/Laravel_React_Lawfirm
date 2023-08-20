@@ -21,22 +21,12 @@ class UserRepository implements UserRepositoryInterface {
         return response()->json(['userData'=>$users],200);
     }
 
-    public function create()
-    {
-        if (auth()->user()->hasRole('Admin')) {
-            $roles = Role::pluck('name','id')->toArray();
-        }else {
-            $roles = Role::where('name','!=','Admin')->pluck('name','id')->toArray();
-        }
-        return view('admin.users.create', compact('roles'));
-    }
-
     public function store($request)
     {
         try {
-            $data['first_name'] = Purify::clean($request->first_name);
-            $data['last_name'] = Purify::clean($request->last_name);
-            $data['user_name'] = Purify::clean($request->user_name);
+            $data['first_name'] = $request->first_name;
+            $data['last_name'] = $request->last_name;
+            $data['user_name'] = $request->user_name;
             $data['email'] = $request->email;
             $data['status'] = $request->status;
             if ($request->password && $request->password != null) {
@@ -46,18 +36,17 @@ class UserRepository implements UserRepositoryInterface {
             $user = User::create($data);
             $user->syncRoles($request->roles_id);
 
-            toast(trans('site.created successfully', ['attr' => trans_choice('site.users', 0)]), 'success');
-            return to_route('admin.users.index');
+            return response()->json('success', 200);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->json(['error' => $e->getMessage()]);
         }
-
     }
 
-    public function show($user)
+    public function show($id)
     {
-        $user->with('roles');
-        return view('admin.users.show', compact('user'));
+        $user = User::with('roles')->find($id);
+
+        return response()->json($user);
     }
 
     public function edit($user)
@@ -70,7 +59,7 @@ class UserRepository implements UserRepositoryInterface {
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
-    public function update($request, $user)
+    public function update($request, $id)
     {
         try {
             $data = $request->only('first_name','last_name','user_name','email','status');
@@ -78,21 +67,33 @@ class UserRepository implements UserRepositoryInterface {
                 $data['password'] = bcrypt($request->password);
             }
 
+            $user = User::find($id);
             $user->update($data);
             $user->syncRoles($request->roles_id);
 
-            toast(trans('site.updated successfully', ['attr' => trans_choice('site.users', 0)]), 'success');
-            return to_route('admin.users.index');
+            return response()->json('success', 200);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            return redirect()->json(['error' => $e->getMessage()]);
         }
     }
 
-    public function destroy($user)
+    public function destroy($id)
     {
-        $user->delete();
-
-        toast(trans('site.deleted successfully', ['attr' => trans_choice('site.users', 0)]), 'success');
-        return to_route('admin.users.index');
+        try{
+            $user = User::find($id);
+            $user->delete();
+            
+            $users = User::with('roles')->whereHas('roles', function($q) {
+                if (auth()->user()->hasRole('Admin')) {
+                    return $q;
+                }else {
+                    return $q->where('name','!=','Admin');
+                }
+            })->where('id', '!=', auth()->id())->orderBy('id', 'desc')->get();
+    
+            return response()->json(['userData'=>$users], 200);
+        } catch (\Exception $e) {
+            return redirect()->json(['error' => $e->getMessage()]);
+        }
     }
 }

@@ -23,6 +23,16 @@ export default [
     exact: true,
   },
   {
+    path: 'users/:id/edit',
+    component: lazy(() => import('../pages/admin/Users/edit')),
+    exact: true,
+  },
+  {
+    path: 'users/:id',
+    component: lazy(() => import('../pages/admin/Users/show')),
+    exact: true,
+  },
+  {
     path: 'roles',
     component: lazy(() => import('../pages/admin/Roles')),
     exact: true,

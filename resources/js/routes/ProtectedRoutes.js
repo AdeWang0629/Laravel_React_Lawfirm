@@ -55,12 +55,12 @@ const darkTheme = createTheme({
       "Noto Sans",
       "Noto Color Emoji"
     ].join(','),
-    fontSize: 12
+    fontSize: 11
   },
 });
 const responsive_darkTheme = responsiveFontSizes(darkTheme);
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',

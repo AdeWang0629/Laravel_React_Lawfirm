@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Repository\UserRepositoryInterface;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -24,19 +25,14 @@ class UserController extends Controller
         return $this->userRep->index();
     }
 
-    public function create()
-    {
-        return $this->userRep->create();
-    }
-
     public function store(UserRequest $request)
     {
         return $this->userRep->store($request);
     }
 
-    public function show(User $user)
+    public function show(Request $request, $id)
     {
-        return $this->userRep->show($user);
+        return $this->userRep->show($id);
     }
 
     public function edit(User $user)
@@ -44,13 +40,13 @@ class UserController extends Controller
         return $this->userRep->edit($user);
     }
 
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, $id)
     {
-        return $this->userRep->update($request, $user);
+        return $this->userRep->update($request, $id);
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        return $this->userRep->destroy($user);
+        return $this->userRep->destroy($id);
     }
 }
