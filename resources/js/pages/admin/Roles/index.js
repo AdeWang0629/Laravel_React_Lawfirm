@@ -4,18 +4,14 @@ import {
     Breadcrumbs,
     Button,
     Card,
-    Chip,
-    Link
 } from '@mui/material';
 import {
     Box,
     Grid,
-    Stack
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 
 import { styled } from '@mui/material/styles';
 
@@ -29,13 +25,13 @@ import Paper from '@mui/material/Paper';
 
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import actions from '../../../redux/Admin/User/actions';
+import actions from '../../../redux/Admin/Role/actions';
 
 import { grey } from '@mui/material/colors';
 
 import { NavLink } from 'react-router-dom';
 
-import { username_item, formate_date } from '../../../helpers';
+import { formate_date } from '../../../helpers';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -67,16 +63,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function index(){
     const dispatch = useDispatch();
     const [rows, setRows] = useState([]);
-    const data = useSelector((state)=> state.userReducer);
+    const data = useSelector((state)=> state.roleReducer);
 
     useEffect(()=>{
         dispatch({
-            type: actions.GETUSERS
+            type: actions.GETROLES
         });
     },[]);
 
     useEffect(()=>{
-        setRows(data.usersData);
+        setRows(data.rolesData);
     });
 
     const userShowLinkClick = (id) => {
@@ -118,7 +114,7 @@ export default function index(){
                             </Breadcrumbs>
                         </Grid>
                         <Grid item style={{marginBottom: 10}}>
-                            <NavLink to="/users/create">
+                            <NavLink to="/roles/create">
                                 <Button variant="contained" color='secondary'>
                                     Add new Role
                                     <AddIcon/>
@@ -158,18 +154,20 @@ export default function index(){
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
                                                 <Typography>
-
+                                                    {row.name}
                                                 </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                                
+                                                <Typography>
+                                                    { row.users.length || 0 }
+                                                </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                                {/* <VisibilityIcon color="secondary" style={{ cursor: 'pointer', marginRight: 10}} onClick={() => userShowLinkClick(row.id)}/>
-                                                <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => handleClickOpen(row)} /> */}
+                                                <EditNoteIcon color="secondary" style={{ cursor: 'pointer', marginRight: 20, fontSize: 25}} onClick={() => userShowLinkClick(row.id)}/>
+                                                <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => handleClickOpen(row)} />
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                                {/* {formate_date(row.created_at)} */}
+                                                {formate_date(row.created_at)}
                                             </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
@@ -179,28 +177,6 @@ export default function index(){
                         </Box>
                     </Card>
                 </Box>
-
-                <Dialog
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                >
-                    <DialogTitle id="alert-dialog-title">
-                    {"Delete User"}
-                    </DialogTitle>
-                    <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Are you sure for delete ({row ? row.user_name : ''})?
-                    </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={() => userDeleteLinkClick({row})} autoFocus color='error'>
-                        Delete
-                    </Button>
-                    </DialogActions>
-                </Dialog>
             </Box>
         </Index>
     );

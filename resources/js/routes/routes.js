@@ -38,6 +38,11 @@ export default [
     exact: true,
   },
   {
+    path: 'roles/create',
+    component: lazy(() => import('../pages/admin/Roles/create')),
+    exact: true,
+  },
+  {
     path: 'clients-types',
     component: lazy(() => import('../pages/admin/Clients/types')),
     exact: true,

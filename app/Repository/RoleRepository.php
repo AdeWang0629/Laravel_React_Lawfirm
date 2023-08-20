@@ -10,14 +10,14 @@ use Stevebauman\Purify\Facades\Purify;
 class RoleRepository implements RoleRepositoryInterface {
     public function index()
     {
-        $roles = Role::query()->where('name', '!=', 'Admin')->orderBy('id', 'desc')->paginate('10');
-        return view('admin.roles.index', compact('roles'));
+        $roles = Role::with('users')->where('name', '!=', 'Admin')->orderBy('id', 'desc')->get();
+        return response()->json(['roleData'=>$roles],200);
     }
 
-    public function create()
+    public function show()
     {
-        $permissions = Permission::pluck('name','id');
-        return view('admin.roles.create', compact('permissions'));
+        $permissions = Permission::pluck('name','id'); //Here, This is problem.
+        return response()->json(['permissionData'=>$permissions],200);
     }
 
     public function store($request)

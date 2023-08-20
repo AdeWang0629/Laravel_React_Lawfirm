@@ -6,6 +6,7 @@ import axiosClient from '../../../config/axiosClient';
 import axios from '../../../config/axiosClient';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 function* getUsers() {
     const response = yield call(() => getCustomRequest('api/admin/users'));
     yield put({type:actions.GETUSERSSUCCESS, payload:response.data.userData});

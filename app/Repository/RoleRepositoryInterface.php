@@ -5,7 +5,7 @@ namespace App\Repository;
 interface RoleRepositoryInterface {
     public function index();
 
-    public function create();
+    public function show();
 
     public function store($request);
 

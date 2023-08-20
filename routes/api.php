@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\Admin\RoleController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,7 +35,10 @@ Route::group(['middleware' => 'jwt_auth'], function() {
     Route::name('admin.')->prefix('admin/')->group(function () {
         Route::get('home', [App\Http\Controllers\Api\Admin\AdminController::class,'index'])->name('home');
 
-        // Route::apiResource('role', [App\Http\Controllers\PhotoController::class]);
         Route::apiResource('users', UserController::class);
+        Route::apiResource('roles', RoleController::class);
+    });
+    Route::get('/hi',function(){
+        return "Hi, My name is Tony";
     });
 });
