@@ -9,13 +9,21 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 function* getRoles() {
-    const response = yield call(() => getCustomRequest('api/admin/roles'));
-    yield put({type:actions.GETROLESSUCCESS, payload:response.data.roleData});
+    try{
+        const response = yield call(() => getCustomRequest('api/admin/roles'));
+        yield put({type:actions.GETROLESSUCCESS, payload:response.data.roleData});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
 }
 
 function* getPermission() {
-    const response = yield call(() => getCustomRequest('api/admin/roles/create'));
-    yield put({type:actions.GETPERMISSIONSUCCESS, payload:response.data.permissionData});
+    try{
+        const response = yield call(() => getCustomRequest('api/admin/roles/create'));
+        yield put({type:actions.GETPERMISSIONSUCCESS, payload:response.data.permissionData});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
 }
 
 export default function* rootSaga() {

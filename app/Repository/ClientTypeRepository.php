@@ -13,7 +13,10 @@ class ClientTypeRepository implements ClientTypeRepositoryInterface {
     {
         $clientTypes = ClientType::withCount('lawsuites')->orderByDesc('id')->get();
         $trashed = ClientType::onlyTrashed()->get();
-        return view('admin.clients-types.index', compact('clientTypes', 'trashed'));
+        return response()->json([
+            'clientTypes'  => $clientTypes,
+            'trashed' => $trashed,
+        ],200);
     }
 
     public function trashed()
@@ -25,12 +28,18 @@ class ClientTypeRepository implements ClientTypeRepositoryInterface {
     public function store($request)
     {
         try {
-            ClientType::create(['name' => Purify::clean($request->name)]);
-            toast(trans('site.created successfully', ['attr' => removebeginninLetters(trans_choice('site.categories', 0), 2) .' '. trans_choice('site.clients', 0)]),'success');
-            return back();
+            ClientType::create(['name' => $request->name]);
+            // return response()->json('success', 200);
+            
+            $clientTypes = ClientType::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = ClientType::onlyTrashed()->get();
+            return response()->json([
+                'clientTypes'  => $clientTypes,
+                'trashed' => $trashed,
+            ],200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json('error', $e->getMessage());
         }
     }
 
@@ -38,27 +47,38 @@ class ClientTypeRepository implements ClientTypeRepositoryInterface {
     {
         try {
             $clientType = ClientType::findOrFail($id);
-            $clientType->update(['name' => Purify::clean($request->name)]);
-            toast(trans('site.updated successfully', ['attr' => removebeginninLetters(trans_choice('site.categories', 0), 2) .' '. trans_choice('site.clients', 0)]),'success');
-            return back();
+            $clientType->update(['name' => $request->name]);
+            
+            $clientTypes = ClientType::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = ClientType::onlyTrashed()->get();
+            return response()->json([
+                'clientTypes'  => $clientTypes,
+                'trashed' => $trashed,
+            ],200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json('error', $e->getMessage());
         }
     }
 
     public function delete($id)
     {
-        $clientType = ClientType::findOrFail($id);
-
-        if ($clientType->lawsuites->count() > 0) {
-            toast(trans('site.should_be_deleted_children_first'), 'warning');
-            return back();
+        try {
+            $clientType = ClientType::findOrFail($id);
+    
+            $clientType->delete();
+            // return response()->json('success', 200);
+            
+            $clientTypes = ClientType::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = ClientType::onlyTrashed()->get();
+            return response()->json([
+                'clientTypes'  => $clientTypes,
+                'trashed' => $trashed,
+            ],200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json('error', $e->getMessage());
         }
-
-        $clientType->delete();
-        toast(trans('site.deleted successfully', ['attr' => removebeginninLetters(trans_choice('site.categories', 0), 2) .' '. trans_choice('site.clients', 0)]),'error');
-        return back();
     }
 
     public function forceDelete($id)
