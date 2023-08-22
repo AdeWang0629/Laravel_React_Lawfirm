@@ -12,8 +12,13 @@ class LawsuitePaperRepository implements LawsuitePaperRepositoryInterface {
 
     public function index()
     {
-        $lawsuitePapers = LawsuitePaper::with('lawsuite')->get();
-        return view('admin.lawsuite-paper.index', compact('lawsuitePapers'));
+        try {
+            $lawsuitePapers = LawsuitePaper::with('lawsuite')->get();
+            
+            return response()->json(['lawsuitePapersData' => $lawsuitePapers], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function show($lawsuites_paper)

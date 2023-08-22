@@ -38,7 +38,8 @@ export default function Sidebar({open}) {
     '/clients-types',
     '/clients',
     '/lawsuites/create',
-    '/lawsuites'
+    '/lawsuites',
+    '/lawsuites-papers'
   ];
 
   const user = JSON.parse(localStorage.getItem('user'));

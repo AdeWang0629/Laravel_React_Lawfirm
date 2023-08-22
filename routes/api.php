@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\ClientTypeController;
 use App\Http\Controllers\Api\Admin\LawsuiteController;
+use App\Http\Controllers\Api\Admin\LawsuitePaperController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,12 +46,15 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::post('clients-types/{client_type}/restore', 'ClientTypeController@restore')->name('clients-types.restore');
         Route::delete('clients-types/{client_type}/force-delete', 'ClientTypeController@forceDelete')->name('clients-types.force.delete');
         Route::get('clients-types/trashed', 'ClientTypeController@trashed')->name('clients-types.trashed');
-        Route::apiResource('clients-types', ClientTypeController::class)->except(['create','show','edit']);
+        
 
         //start LawsuiteController
         Route::resource('lawsuites', LawsuiteController::class);
         Route::get('lawsuites-status/{id}', 'LawsuiteController@lawsuitesStatus')->name('lawsuites.status');
         Route::get('lawsuites/contract/{id}', 'LawsuiteController@showContract')->name('show.contract');
         Route::match(['put','patch'],'lawsuites/judgment-update/{lawsuite}', 'LawsuiteController@judgmentUpdate')->name('lawsuites.judgment.update');
+
+        //start LawsuitePaperController
+        Route::resource('lawsuites-papers', LawsuitePaperController::class)->except(['create','edit']);
     });
 });
