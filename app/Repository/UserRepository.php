@@ -38,7 +38,7 @@ class UserRepository implements UserRepositoryInterface {
 
             return response()->json('success', 200);
         } catch (\Exception $e) {
-            return redirect()->json(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -73,7 +73,7 @@ class UserRepository implements UserRepositoryInterface {
 
             return response()->json('success', 200);
         } catch (\Exception $e) {
-            return redirect()->json(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -93,7 +93,7 @@ class UserRepository implements UserRepositoryInterface {
     
             return response()->json(['userData'=>$users], 200);
         } catch (\Exception $e) {
-            return redirect()->json(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 }

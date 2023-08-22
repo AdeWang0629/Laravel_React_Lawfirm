@@ -3,6 +3,7 @@ import adminHomeReducer from './Admin/Home/reducer';
 import userReducer from './Admin/User/reducer';
 import roleReducer from './Admin/Role/reducer';
 import clientReducer from './Admin/Client/reducer';
+import lawsuiteReducer from './Admin/Lawsuite/reducer';
 
 //Include all the reducer to combine and provide to configure store.
 export default {
@@ -10,5 +11,6 @@ export default {
   adminHomeReducer,
   userReducer,
   roleReducer,
-  clientReducer
+  clientReducer,
+  lawsuiteReducer
 }

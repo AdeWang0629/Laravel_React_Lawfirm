@@ -76,18 +76,18 @@ export default function index(){
     });
 
     const userShowLinkClick = (id) => {
-        dispatch({
-            type: actions.SHOWUSER,
-            payload: id
-        });
+        // dispatch({
+        //     type: actions.SHOWUSER,
+        //     payload: id
+        // });
     }
 
     const userDeleteLinkClick = (data) => {
-        dispatch({
-            type: actions.DELETEUSER,
-            payload: data.row.id
-        });
-        setOpen(false);
+        // dispatch({
+        //     type: actions.DELETEUSER,
+        //     payload: data.row.id
+        // });
+        // setOpen(false);
     }
 
     const [open, setOpen] = useState(false);

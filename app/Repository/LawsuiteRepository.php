@@ -43,13 +43,25 @@ class LawsuiteRepository implements LawsuiteRepositoryInterface {
 
     public function create()
     {
-        $clients = Client::all();
-        $clientTypes = ClientType::all();
-        $caseTypes = CaseType::all();
-        $caseStages = CaseStage::all();
-        $lawsuiteCases = LawsuitCase::all();
-        $courts = Court::all();
-        return view('admin.lawsuites.create', compact('clients','clientTypes','caseTypes','caseStages','lawsuiteCases','courts'));
+        try{
+            $clients = Client::all();
+            $clientTypes = ClientType::all();
+            $caseTypes = CaseType::all();
+            $caseStages = CaseStage::all();
+            $lawsuiteCases = LawsuitCase::all();
+            $courts = Court::all();
+    
+            return response()->json([
+                'clientsData'=>$clients,
+                'clientTypesData'=>$clientTypes,
+                'caseTypesData'=>$caseTypes,
+                'caseStagesData'=>$caseStages,
+                'lawsuiteCasesData'=>$lawsuiteCases,
+                'courtsData'=>$courts
+            ], 200);
+        } catch (\Exception $e) {
+            return redirect()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function store($request)
@@ -60,32 +72,32 @@ class LawsuiteRepository implements LawsuiteRepositoryInterface {
                 'client_id'                 => $request->client_id,
                 'client_type_id'            => $request->client_type_id,
                 'case_type_id'              => $request->case_type_id,
-                'lawsuite_lawyer'           => Purify::clean($request->lawsuite_lawyer),
-                'lawsuite_subject'          => Purify::clean($request->lawsuite_subject),
+                'lawsuite_lawyer'           => $request->lawsuite_lawyer,
+                'lawsuite_subject'          => $request->lawsuite_subject,
                 'case_stage_id'             => $request->case_stage_id,
                 'lawsuit_case_id'           => $request->lawsuit_case_id,
                 'court_id'                  => $request->court_id,
                 'case_number'               => lawsuiteCaseNumber(),
                 'base_encode'               => base64_encode(lawsuiteCaseNumber().\Illuminate\Support\Str::random(40)),
-                'court_case_number'         => Purify::clean($request->court_case_number),
-                'contract_title'            => Purify::clean($request->contract_title),
-                'contract_date'             => Purify::clean($request->contract_date),
-                'contract_amount'           => Purify::clean($request->contract_amount),
-                'vat'                       => Purify::clean($request->vat),
-                'total_amount'              => Purify::clean($request->total_amount),
-                'contract_terms'            => Purify::clean($request->contract_terms),
-                'notes'                     => Purify::clean($request->notes),
+                'court_case_number'         => $request->court_case_number,
+                'contract_title'            => $request->contract_title,
+                'contract_date'             => $request->contract_date,
+                'contract_amount'           => $request->contract_amount,
+                'vat'                       => $request->vat,
+                'total_amount'              => $request->total_amount,
+                'contract_terms'            => $request->contract_terms,
+                'notes'                     => $request->notes,
             ]);
 
             foreach ($request->opponents as $opponent) {
                 $lawsuite->opponents()->create([
-                    'opponent_name'             => Purify::clean($opponent['opponent_name']),
-                    'opponent_phone'            => Purify::clean($opponent['opponent_phone']),
-                    'opponent_city'             => Purify::clean($opponent['opponent_city']),
-                    'opponent_section'          => Purify::clean($opponent['opponent_section']),
-                    'opponent_address'          => Purify::clean($opponent['opponent_address']),
-                    'opponent_lawyer'           => Purify::clean($opponent['opponent_lawyer']),
-                    'opponent_lawyer_phone'     => Purify::clean($opponent['opponent_lawyer_phone']),
+                    'opponent_name'             => $opponent['opponent_name'],
+                    'opponent_phone'            => $opponent['opponent_phone'],
+                    'opponent_city'             => $opponent['opponent_city'],
+                    'opponent_section'          => $opponent['opponent_section'],
+                    'opponent_address'          => $opponent['opponent_address'],
+                    'opponent_lawyer'           => $opponent['opponent_lawyer'],
+                    'opponent_lawyer_phone'     => $opponent['opponent_lawyer_phone'],
                 ]);
             }
 
@@ -94,15 +106,15 @@ class LawsuiteRepository implements LawsuiteRepositoryInterface {
                 'client_id'     => $request->client_id,
                 'lawsuite_id'   => $lawsuite->id,
                 'credit'        => 0.00,
-                'debit'         => Purify::clean($request->total_amount)
+                'debit'         => $request->total_amount
             ]);
 
             DB::commit();
-            toast(trans('site.created successfully', ['attr' => trans_choice('site.lawsuites', 0)]),'success');
-            return to_route('admin.lawsuites.index');
+
+            return response()->json('success', 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 

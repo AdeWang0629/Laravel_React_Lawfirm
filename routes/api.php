@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\ClientTypeController;
+use App\Http\Controllers\Api\Admin\LawsuiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,8 +46,11 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::delete('clients-types/{client_type}/force-delete', 'ClientTypeController@forceDelete')->name('clients-types.force.delete');
         Route::get('clients-types/trashed', 'ClientTypeController@trashed')->name('clients-types.trashed');
         Route::apiResource('clients-types', ClientTypeController::class)->except(['create','show','edit']);
-    });
-    Route::get('/hi',function(){
-        return "Hi, My name is Tony";
+
+        //start LawsuiteController
+        Route::resource('lawsuites', LawsuiteController::class);
+        Route::get('lawsuites-status/{id}', 'LawsuiteController@lawsuitesStatus')->name('lawsuites.status');
+        Route::get('lawsuites/contract/{id}', 'LawsuiteController@showContract')->name('show.contract');
+        Route::match(['put','patch'],'lawsuites/judgment-update/{lawsuite}', 'LawsuiteController@judgmentUpdate')->name('lawsuites.judgment.update');
     });
 });

@@ -20,6 +20,7 @@ function* getClients() {
 function* createClientsTypes(action) {
     try{
         const response = yield call(() => postCustomRequest('api/admin/clients-types', action.payload));
+        toast.success("Category Creating was successful.");
         yield put({type:actions.GETCLIENTSSUCCESS, payload:response.data});
         // yield call(browserRedirect, '/clients-types');
     } catch(error){
