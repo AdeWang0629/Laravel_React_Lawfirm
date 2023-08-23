@@ -35,8 +35,18 @@ function* getPapers() {
     }
 }
 
+function* getAllLawsuites() {
+    try{
+        const response = yield call(() => getCustomRequest('api/admin/lawsuites'));
+        yield put({type:actions.GETALLLAWSUITESSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeLatest(actions.GETCREATELAWSUITES, getCreateLawsuites)]);
     yield all([takeLatest(actions.CREATELAWSUITES, createLawsuites)]);
     yield all([takeLatest(actions.GETPAPERS, getPapers)]);
+    yield all([takeLatest(actions.GETALLLAWSUITES, getAllLawsuites)]);
 }

@@ -149,7 +149,7 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function index({...others}){
+export default function caseTypes({...others}){
     const dispatch = useDispatch();
     const [rows, setRows] = useState([]);
     const data = useSelector((state)=> state.lawsuiteReducer);

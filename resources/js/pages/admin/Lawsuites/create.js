@@ -771,7 +771,7 @@ export default function create({...others}){
                             <DialogContent>
                                 <Box width={500}>
                                     <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
-                                        <InputLabel htmlFor="outlined-adornment-name- clients_types_create">Name</InputLabel>
+                                        <InputLabel htmlFor="outlined-adornment-name- clients_types_create">Caegory Name</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-name-user_create"
                                             type="text"
@@ -807,7 +807,7 @@ export default function create({...others}){
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Add New Category"}
+                    {"Add New Category Client"}
                     </DialogTitle>
                     <Formik
                         initialValues={{

@@ -120,7 +120,7 @@ export default function papers(){
                         <Grid item style={{marginBottom: 10}}>
                             <NavLink to="/lawsuites">
                                 <Button variant="contained" color='secondary'>
-                                    Add new User
+                                    Add new Lawsuite
                                     <AddIcon/>
                                 </Button>
                             </NavLink>

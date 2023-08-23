@@ -7,7 +7,8 @@ const initialState = {
   clientsData: [],
   courtsData: [],
   lawsuiteCasesData: [],
-  lawsuitePapersData: []
+  lawsuitePapersData: [],
+  allLawsuitesData: [],
 }
 
 function Reducer(state = initialState, action) {
@@ -26,6 +27,11 @@ function Reducer(state = initialState, action) {
       return {
         ...state,
         lawsuitePapersData: action.payload.lawsuitePapersData
+      }
+    case actions.GETALLLAWSUITESSUCCESS:
+      return {
+        ...state,
+        allLawsuitesData: action.payload.lawsuitesData
       }
     default:
       return state

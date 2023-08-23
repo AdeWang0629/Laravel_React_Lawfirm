@@ -21,19 +21,20 @@ class LawsuiteRepository implements LawsuiteRepositoryInterface {
     {
         $lawsuites = Lawsuite::withCount('caseSessions')
         ->when(request('client-type') != '', function($q) {
-            return $q->whereClientTypeId(request('client-type'));
+            return $q->whereClientTypeName(request('client-type'));
         })->when(request('client') != '', function($q) {
-            return $q->whereClientId(request('client'));
+            return $q->whereClientName(request('client'));
         })->when(request('court') != '', function($q) {
-            return $q->whereCourtId(request('court'));
+            return $q->whereCourtName(request('court'));
         })->when(request('lawsuitCase') != '', function($q) {
-            return $q->whereLawsuitCaseId(request('lawsuitCase'));
+            return $q->whereLawsuitCaseName(request('lawsuitCase'));
         })->when(request('case-stage') != '', function($q) {
-            return $q->whereCaseStageId(request('case-stage'));
+            return $q->whereCaseStageName(request('case-stage'));
         })->when(request('case-type') != '', function($q) {
-            return $q->whereCaseTypeId(request('case-type'));
+            return $q->whereCaseTypeName(request('case-type'));
         })->orderBy('id', 'desc')->get();
-        return view('admin.lawsuites.index', compact('lawsuites'));
+
+        return response()->json(['lawsuitesData'=>$lawsuites], 200);
     }
 
     public function show($lawsuite)
