@@ -9,6 +9,7 @@ const initialState = {
   lawsuiteCasesData: [],
   lawsuitePapersData: [],
   allLawsuitesData: [],
+  trashedData: []
 }
 
 function Reducer(state = initialState, action) {
@@ -32,6 +33,12 @@ function Reducer(state = initialState, action) {
       return {
         ...state,
         allLawsuitesData: action.payload.lawsuitesData
+      }
+    case actions.GETCASETYPESSUCCESS:
+      return {
+        ...state,
+        caseTypesData: action.payload.caseTypesData,
+        trashedData: action.payload.trashedData
       }
     default:
       return state

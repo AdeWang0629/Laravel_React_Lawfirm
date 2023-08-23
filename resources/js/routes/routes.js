@@ -64,7 +64,7 @@ export default [
   },
   {
     path: 'case-types',
-    component: lazy(() => import('../pages/admin/Lawsuites/category')),
+    component: lazy(() => import('../pages/admin/Lawsuites/caseTypes')),
     exact: true,
   },
   {

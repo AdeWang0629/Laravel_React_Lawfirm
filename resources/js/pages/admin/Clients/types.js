@@ -96,7 +96,7 @@ export default function types({...others}){
         setClientTypes(data.clientTypesData);
         setTrashedData(data.trashedData);
     });
-
+    console.log(clientTypes);
     useEffect(()=>{
         setItem('');
         setOpenAddModal(false);
@@ -182,7 +182,7 @@ export default function types({...others}){
                                     </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                    {clientTypes.map((item, index) => (
+                                    {clientTypes ? clientTypes.map((item, index) => (
                                         <StyledTableRow key={item.id}>
                                             <StyledTableCell align="center">
                                                 <Typography>
@@ -200,7 +200,7 @@ export default function types({...others}){
                                             </StyledTableCell>
                                             <StyledTableCell align="center">{formate_date(item.created_at)}</StyledTableCell>
                                         </StyledTableRow>
-                                    ))}
+                                    )) : ''}
                                     </TableBody>
                                 </Table>
                             </TableContainer>

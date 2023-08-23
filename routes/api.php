@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\ClientTypeController;
 use App\Http\Controllers\Api\Admin\LawsuiteController;
 use App\Http\Controllers\Api\Admin\LawsuitePaperController;
+use App\Http\Controllers\Api\Admin\CaseTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::post('clients-types/{client_type}/restore', 'ClientTypeController@restore')->name('clients-types.restore');
         Route::delete('clients-types/{client_type}/force-delete', 'ClientTypeController@forceDelete')->name('clients-types.force.delete');
         Route::get('clients-types/trashed', 'ClientTypeController@trashed')->name('clients-types.trashed');
-        
+        Route::apiResource('clients-types', ClientTypeController::class)->except(['create','show','edit']);
 
         //start LawsuiteController
         Route::resource('lawsuites', LawsuiteController::class);
@@ -56,5 +57,11 @@ Route::group(['middleware' => 'jwt_auth'], function() {
 
         //start LawsuitePaperController
         Route::resource('lawsuites-papers', LawsuitePaperController::class)->except(['create','edit']);
+
+        //start CaseTypeController
+        Route::post('case-types/{case_type}/restore', 'CaseTypeController@restore')->name('case-types.restore');
+        Route::delete('case-types/{case_type}/force-delete', 'CaseTypeController@forceDelete')->name('case-types.force.delete');
+        Route::get('case-types/trashed', 'CaseTypeController@trashed')->name('case-types.trashed');
+        Route::resource('case-types', CaseTypeController::class)->except(['create','show','edit']);
     });
 });

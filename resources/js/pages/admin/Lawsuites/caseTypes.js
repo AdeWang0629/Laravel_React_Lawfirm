@@ -159,12 +159,12 @@ export default function caseTypes({...others}){
 
     useEffect(()=>{
         dispatch({
-            type: actions.GETALLLAWSUITES
+            type: actions.GETCASETYPES
         });
     },[]);
 
     useEffect(()=>{
-        // setRows(data.allLawsuitesData);
+        setRows(data.caseTypesData);
     });
 
     const userShowLinkClick = (id) => {
@@ -182,17 +182,7 @@ export default function caseTypes({...others}){
         setOpen(false);
     }
 
-    const [open, setOpen] = useState(false);
     const [row, setRow] = useState();
-
-    const handleClickOpen = (row) => {
-      setOpen(true);
-      setRow(row);
-    };
-  
-    const handleClose = () => {
-      setOpen(false);
-    };
 
     const [openAddNewCategoryModal, setOpenAddNewCategoryModal] = useState(false);
     const addNewCategory = () => {
@@ -202,20 +192,22 @@ export default function caseTypes({...others}){
         setOpenAddNewCategoryModal(false);
     };
 
-    const [openAddNewCategoryClientModal, setOpenAddNewCategoryClientModal] = useState(false);
-    const addNewCategoryClient = () => {
-        setOpenAddNewCategoryClientModal(true);
+    const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
+    const editCategoryClient = (row) => {
+        setOpenEditCategoryModal(true);
+        setRow(row);
     }
-    const handleCloseAddNewCategoryClientModal = () => {
-        setOpenAddNewCategoryClientModal(false);
+    const handleCloseEditCategoryModal = () => {
+        setOpenEditCategoryModal(false);
     };
 
-    const [openAddNewCourtModal, setOpenAddNewCourtModal] = useState(false);
-    const addNewCourt = () => {
-        setOpenAddNewCourtModal(true);
+    const [openDeleteCategoryModal, setOpenDeleteCategoryModal] = useState(false);
+    const deleteCategoryModal = (row) => {
+        setOpenDeleteCategoryModal(true);
+        setRow(row);
     }
-    const handleCloseAddNewCourtModal = () => {
-      setOpenAddNewCourtModal(false);
+    const handleCloseDeleteCategoryModal = () => {
+        setOpenDeleteCategoryModal(false);
     };
 
     const [page, setPage] = useState(0);
@@ -234,6 +226,20 @@ export default function caseTypes({...others}){
       setPage(0);
     };
 
+    useEffect(()=>{
+        setRow('');
+        setOpenAddNewCategoryModal(false);
+        setOpenEditCategoryModal(false);
+        setOpenDeleteCategoryModal(false);
+    }, [data]);
+
+    const caseTypesDeleteLinkClick = (data) => {
+        dispatch({
+            type: actions.DELETECASETYPES,
+            payload: data.row.id
+        });
+    }
+
     return (
         <Index>
             <Box sx={{ bgcolor: 'background.paper', minHeight: '90vh' }}>
@@ -242,7 +248,7 @@ export default function caseTypes({...others}){
                         <Grid item>
                             <Breadcrumbs aria-label="breadcrumb">
                                 <Typography color="text.primary" variant='h5'>Table</Typography>
-                                <Typography>Lawsuites</Typography>
+                                <Typography> Lawsuites categories </Typography>
                             </Breadcrumbs>
                         </Grid>
                         <Grid item style={{marginBottom: 10}}>
@@ -250,28 +256,6 @@ export default function caseTypes({...others}){
                                 Add new category
                                 <AddIcon/>
                             </Button>
-                            
-                            <Button size="small" variant="contained" color='secondary' style={{marginRight: 10, backgroundColor: amber[500]}}>
-                                Add new client
-                                <AddIcon/>
-                            </Button>
-                            
-                            <Button size="small" variant="contained" style={{marginRight: 10, backgroundColor: teal[500]}} onClick={() => addNewCategoryClient()}> 
-                                Add new category client
-                                <AddIcon/>
-                            </Button>
-
-                            <Button size="small" variant="contained" color='secondary' style={{marginRight: 10}} onClick={() => addNewCourt()}>
-                                Add new Court
-                                <AddIcon/>
-                            </Button>
-                            
-                            <NavLink to="/lawsuites/create">
-                                <Button size="small" variant="contained" color='success'>
-                                    Add new Lawsuite
-                                    <AddIcon/>
-                                </Button>
-                            </NavLink>
                         </Grid>
                     </Grid>
                 </Box>
@@ -290,35 +274,16 @@ export default function caseTypes({...others}){
                                     <TableHead>
                                     <TableRow>
                                         <StyledTableCell align="center">
-                                            <Typography>LAWSUITE FILE</Typography>
-                                            <Typography>NUMBER</Typography>
+                                            <Typography>CATEGORY NAME</Typography>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <Typography>CLIENT NAME</Typography>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center">
-                                            <Typography>CATEGORY</Typography>
-                                            <Typography>LAWSUITE</Typography>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center">
-                                            <Typography>NUMBERS</Typography>
-                                            <Typography>SESSIONS</Typography>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center">
-                                            <Typography>CONTRACT</Typography>
-                                            <Typography>AMOUNT</Typography>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center">
-                                            <Typography>VAT AMOUNT</Typography>
+                                            <Typography>CASES COUNTS</Typography>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Typography>ACTIONS</Typography>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <Typography>PAID</Typography>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center">
-                                            <Typography>REMAINING</Typography>
+                                            <Typography>CREATED DATE</Typography>
                                         </StyledTableCell>
                                     </TableRow>
                                     </TableHead>
@@ -328,26 +293,23 @@ export default function caseTypes({...others}){
                                        : rows).map((row) => (
                                         <StyledTableRow key={row.id}>
                                             <StyledTableCell align="center">
-                                              <Typography>
-                                                {row.case_number}
-                                              </Typography>
-                                              <Chip label={"primary"} color="primary" size='small' style={{fontSize: '10px', padding: '1px 1px'}}/>
+                                                <Typography>
+                                                    {row.name}
+                                                </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
+                                                <Typography color='blue'>
+                                                    {row.lawsuites_count}
+                                                </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
+                                                <Typography>
+                                                    <EditIcon color="success"  style={{ cursor: 'pointer', marginRight: 15}} onClick={() => editCategoryClient(row)}/>
+                                                    <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => deleteCategoryModal(row)} />
+                                                </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                            </StyledTableCell>
-                                            <StyledTableCell align="center">
-                                            </StyledTableCell>
-                                            <StyledTableCell align="center">
-                                            </StyledTableCell>
-                                            <StyledTableCell align="center">
-                                            </StyledTableCell>
-                                            <StyledTableCell align="center">
-                                            </StyledTableCell>
-                                            <StyledTableCell align="center">
+                                                {formate_date(row.created_at)}
                                             </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
@@ -407,7 +369,7 @@ export default function caseTypes({...others}){
                                 setSubmitting(false);
 
                                 dispatch({
-                                    type: actions2.CREATECLIENTSTYPES,
+                                    type: actions.CREATECASETYPES,
                                     payload: values,
                                 });
                             }
@@ -456,17 +418,17 @@ export default function caseTypes({...others}){
                 </Dialog>
 
                 <Dialog
-                    open={openAddNewCategoryClientModal}
-                    onClose={handleCloseAddNewCategoryClientModal}
+                    open={openEditCategoryModal}
+                    onClose={handleCloseEditCategoryModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Add New Category Client"}
+                    {"Update Category"}
                     </DialogTitle>
                     <Formik
                         initialValues={{
-                            name: '',
+                            name: row ? row.name : '',
                             submit: null
                         }}
                         validationSchema={Yup.object().shape({
@@ -479,8 +441,9 @@ export default function caseTypes({...others}){
                                 setSubmitting(false);
 
                                 dispatch({
-                                    type: actions2.CREATECLIENTSTYPES,
+                                    type: actions.UPDATECASETYPES,
                                     payload: values,
+                                    id: row.id
                                 });
                             }
                         } catch (err) {
@@ -498,14 +461,15 @@ export default function caseTypes({...others}){
                             <DialogContent>
                                 <Box width={500}>
                                     <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
-                                        <InputLabel htmlFor="outlined-adornment-name- clients_types_create">Name</InputLabel>
+                                        <InputLabel htmlFor="outlined-adornment-name- clients_types_create">Caegory Name</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-name-user_create"
                                             type="text"
                                             name="name"
                                             onBlur={handleBlur}
                                             onChange={handleChange}
-                                            label="Name"
+                                            label="Caegory Name"
+                                            value={values.name}
                                             inputProps={{}}
                                         />
                                         {touched.name && errors.name && (
@@ -517,87 +481,38 @@ export default function caseTypes({...others}){
                                 </Box>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleCloseAddNewCategoryClientModal}>Cancel</Button>
+                                <Button onClick={handleCloseEditCategoryModal}>Cancel</Button>
                                 <Button disableElevation disabled={isSubmitting} size="large" type="submit" variant="contained" color="secondary">
-                                    Add
+                                    Update
                                 </Button>
                             </DialogActions>
                         </form>
                         )}
                     </Formik>
                 </Dialog>
-
+                
                 <Dialog
-                    open={openAddNewCourtModal}
-                    onClose={handleCloseAddNewCourtModal}
+                    open={openDeleteCategoryModal}
+                    onClose={handleCloseDeleteCategoryModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Add New Court"}
+                    {"Delete User"}
                     </DialogTitle>
-                    <Formik
-                        initialValues={{
-                            name: '',
-                            submit: null
-                        }}
-                        validationSchema={Yup.object().shape({
-                            name: Yup.string().required('Name is required'),
-                        })}
-                        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-                        try {
-                            if (scriptedRef.current) {
-                                setStatus({ success: true });
-                                setSubmitting(false);
-
-                                dispatch({
-                                    type: actions2.CREATECLIENTSTYPES,
-                                    payload: values,
-                                });
-                            }
-                        } catch (err) {
-                                console.error(err);
-                                if (scriptedRef.current) {
-                                setStatus({ success: false });
-                                setErrors({ submit: err.message });
-                                setSubmitting(false);
-                            }
-                        }
-                        }}
-                    >
-                        {({ errors, handleBlur, handleChange, handleSubmit, setFieldValue, isSubmitting, touched, values }) => (
-                        <form noValidate onSubmit={handleSubmit} {...others}>
-                            <DialogContent>
-                                <Box width={500}>
-                                    <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
-                                        <InputLabel htmlFor="outlined-adornment-name- clients_types_create">Court Name</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-name-user_create"
-                                            type="text"
-                                            name="name"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            label="Court Name"
-                                            inputProps={{}}
-                                        />
-                                        {touched.name && errors.name && (
-                                            <FormHelperText error id="standard-weight-helper-text-name-clients_types_create">
-                                            {errors.name}
-                                            </FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </Box>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleCloseAddNewCourtModal}>Cancel</Button>
-                                <Button disableElevation disabled={isSubmitting} size="large" type="submit" variant="contained" color="secondary">
-                                    Add
-                                </Button>
-                            </DialogActions>
-                        </form>
-                        )}
-                    </Formik>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Are you sure for delete ({row ? row.name : ''})?
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleCloseDeleteCategoryModal}>Cancel</Button>
+                    <Button onClick={() => caseTypesDeleteLinkClick({row})} autoFocus color='error'>
+                        Delete
+                    </Button>
+                    </DialogActions>
                 </Dialog>
+
             </Box>
         </Index>
     );
