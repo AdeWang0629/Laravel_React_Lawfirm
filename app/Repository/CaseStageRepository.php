@@ -11,9 +11,17 @@ class CaseStageRepository implements CaseStageRepositoryInterface {
 
     public function index()
     {
-        $caseStages = CaseStage::withCount('lawsuites')->orderByDesc('id')->get();
-        $trashed = CaseStage::onlyTrashed()->get();
-        return view('admin.case-stages.index', compact('caseStages','trashed'));
+        try {
+            $caseStages = CaseStage::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = CaseStage::onlyTrashed()->get();
+
+            return response()->json([
+                'caseStagesData' => $caseStages,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function trashed()
@@ -25,12 +33,18 @@ class CaseStageRepository implements CaseStageRepositoryInterface {
     public function store($request)
     {
         try {
-            CaseStage::create(['name' => Purify::clean($request->name)]);
-            toast(trans('site.created successfully', ['attr' => removebeginninLetters(trans_choice('site.stages', 0), 2) .' '. removebeginninLetters(trans('site.litigation'), 2)]),'success');
-            return back();
+            CaseStage::create(['name' => $request->name]);
+
+            $caseStages = CaseStage::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = CaseStage::onlyTrashed()->get();
+
+            return response()->json([
+                'caseStagesData' => $caseStages,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -38,27 +52,38 @@ class CaseStageRepository implements CaseStageRepositoryInterface {
     {
         try {
             $caseStage = CaseStage::findOrFail($id);
-            $caseStage->update(['name' => Purify::clean($request->name)]);
-            toast(trans('site.updated successfully', ['attr' => removebeginninLetters(trans_choice('site.stages', 0), 2) .' '. trans('site.litigation')]),'success');
-            return back();
+            $caseStage->update(['name' => $request->name]);
+
+            $caseStages = CaseStage::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = CaseStage::onlyTrashed()->get();
+
+            return response()->json([
+                'caseStagesData' => $caseStages,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function delete($id)
     {
-        $caseStage = CaseStage::findOrFail($id);
+        try {
+            $caseStage = CaseStage::findOrFail($id);
+            $caseStage->delete();
+            
+            $caseStages = CaseStage::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = CaseStage::onlyTrashed()->get();
 
-        if ($caseStage->lawsuites->count() > 0) {
-            toast(trans('site.should_be_deleted_children_first'), 'warning');
-            return back();
+            return response()->json([
+                'caseStagesData' => $caseStages,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()]);
         }
-
-        $caseStage->delete();
-        toast(trans('site.deleted successfully', ['attr' => removebeginninLetters(trans_choice('site.stages', 0), 2) .' '. trans('site.litigation')]),'success');
-        return back();
     }
 
     public function forceDelete($id)

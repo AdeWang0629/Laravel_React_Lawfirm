@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\Admin\LawsuitePaperController;
 use App\Http\Controllers\Api\Admin\CaseTypeController;
 use App\Http\Controllers\Api\Admin\LawsuitCaseController;
 use App\Http\Controllers\Api\Admin\CourtController;
-
+use App\Http\Controllers\Api\Admin\CaseStageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -77,5 +77,11 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::delete('courts/{court}/force-delete', 'CourtController@forceDelete')->name('courts.force.delete');
         Route::get('courts/trashed', 'CourtController@trashed')->name('courts.trashed');
         Route::resource('courts', CourtController::class)->except(['create','show','edit']);
+
+        //start CaseStageController
+        Route::post('case-stages/{case_stage}/restore', 'CaseStageController@restore')->name('case-stages.restore');
+        Route::delete('case-stages/{case_stage}/force-delete', 'CaseStageController@forceDelete')->name('case-stages.force.delete');
+        Route::get('case-stages/trashed', 'CaseStageController@trashed')->name('case-stages.trashed');
+        Route::resource('case-stages', CaseStageController::class)->except(['create','show','edit']);
     });
 });

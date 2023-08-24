@@ -52,6 +52,12 @@ function Reducer(state = initialState, action) {
         courtsData: action.payload.courtsData,
         trashedData: action.payload.trashedData
       }
+    case actions.GETCASESTAGESSUCCESS:
+      return {
+        ...state,
+        caseStagesData: action.payload.caseStagesData,
+        trashedData: action.payload.trashedData
+      }
     default:
       return state
   }

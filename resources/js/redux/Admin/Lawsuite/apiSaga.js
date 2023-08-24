@@ -162,6 +162,45 @@ function* deleteCourts(action) {
     }
 }
 
+function* getCaseStages() {
+    try{
+        const response = yield call(() => getCustomRequest('api/admin/case-stages'));
+        yield put({type:actions.GETCASESTAGESSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* createCaseStages(action) {
+    try{
+        const response = yield call(() => postCustomRequest('api/admin/case-stages', action.payload));
+        toast.success("Stage Litigation Creating was successful.");
+        yield put({type:actions.GETCASESTAGESSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* updateCaseStages(action) {
+    try{
+        const response = yield call(() => putCustomRequest('api/admin/case-stages', action.id, action.payload));
+        toast.success("Stage Litigation Updating was successful.");
+        yield put({type:actions.GETCASESTAGESSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* deleteCaseStages(action) {
+    try{
+        const response = yield call(() => deleteCustomRequest('api/admin/case-stages', action.payload));
+        toast.success("Stage Litigation deleting was successful.");
+        yield put({type:actions.GETCASESTAGESSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeLatest(actions.GETCREATELAWSUITES, getCreateLawsuites)]);
     yield all([takeLatest(actions.CREATELAWSUITES, createLawsuites)]);
@@ -179,4 +218,8 @@ export default function* rootSaga() {
     yield all([takeLatest(actions.CREATECOURTS, createCourts)]);
     yield all([takeLatest(actions.UPDATECOURTS, updateCourts)]);
     yield all([takeLatest(actions.DELETECOURTS, deleteCourts)]);
+    yield all([takeLatest(actions.GETCASESTAGES, getCaseStages)]);
+    yield all([takeLatest(actions.CREATECASESTAGES, createCaseStages)]);
+    yield all([takeLatest(actions.UPDATECASESTAGES, updateCaseStages)]);
+    yield all([takeLatest(actions.DELETECASESTAGES, deleteCaseStages)]);
 }
