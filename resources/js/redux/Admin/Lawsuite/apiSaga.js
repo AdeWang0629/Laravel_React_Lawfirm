@@ -122,6 +122,46 @@ function* deleteCaseLawsuite(action) {
     }
 }
 
+function* getCourts() {
+    try{
+        const response = yield call(() => getCustomRequest('api/admin/courts'));
+        yield put({type:actions.GETCOURTSSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* createCourts(action) {
+    try{
+        const response = yield call(() => postCustomRequest('api/admin/courts', action.payload));
+        toast.success("Courts Creating was successful.");
+        yield put({type:actions.GETCOURTSSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* updateCourts(action) {
+    try{
+        const response = yield call(() => putCustomRequest('api/admin/courts', action.id, action.payload));
+        toast.success("Courts Updating was successful.");
+        yield put({type:actions.GETCOURTSSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+
+function* deleteCourts(action) {
+    try{
+        const response = yield call(() => deleteCustomRequest('api/admin/courts', action.payload));
+        toast.success("Courts deleting was successful.");
+        yield put({type:actions.GETCOURTSSUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeLatest(actions.GETCREATELAWSUITES, getCreateLawsuites)]);
     yield all([takeLatest(actions.CREATELAWSUITES, createLawsuites)]);
@@ -135,4 +175,8 @@ export default function* rootSaga() {
     yield all([takeLatest(actions.CREATECASELAWSUITE, createCaseLawsuite)]);
     yield all([takeLatest(actions.UPDATECASELAWSUITE, updateCaseLawsuite)]);
     yield all([takeLatest(actions.DELETECASELAWSUITE, deleteCaseLawsuite)]);
+    yield all([takeLatest(actions.GETCOURTS, getCourts)]);
+    yield all([takeLatest(actions.CREATECOURTS, createCourts)]);
+    yield all([takeLatest(actions.UPDATECOURTS, updateCourts)]);
+    yield all([takeLatest(actions.DELETECOURTS, deleteCourts)]);
 }

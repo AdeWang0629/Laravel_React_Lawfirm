@@ -73,6 +73,11 @@ export default [
     exact: true,
   },
   {
+    path: 'courts',
+    component: lazy(() => import('../pages/admin/Lawsuites/courts')),
+    exact: true,
+  },
+  {
     path: 'lawsuites',
     component: lazy(() => import('../pages/admin/Lawsuites')),
     exact: true,

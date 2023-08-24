@@ -11,9 +11,17 @@ class CourtRepository implements CourtRepositoryInterface {
 
     public function index()
     {
-        $courts = Court::withCount('lawsuites')->orderByDesc('id')->get();
-        $trashed = Court::onlyTrashed()->get();
-        return view('admin.courts.index', compact('courts','trashed'));
+        try {
+            $courts = Court::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = Court::onlyTrashed()->get();
+
+            return response()->json([
+                'courtsData' => $courts,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function trashed()
@@ -26,12 +34,18 @@ class CourtRepository implements CourtRepositoryInterface {
     public function store($request)
     {
         try {
-            Court::create(['name' => Purify::clean($request->name)]);
-            toast(trans('site.created successfully', ['attr' => removebeginninLetters(trans_choice('site.courts', 0), 2)]),'success');
-            return back();
+            Court::create(['name' => $request->name]);
+
+            $courts = Court::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = Court::onlyTrashed()->get();
+
+            return response()->json([
+                'courtsData' => $courts,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -39,25 +53,38 @@ class CourtRepository implements CourtRepositoryInterface {
     {
         try {
             $courts = Court::findOrFail($id);
-            $courts->update(['name' => Purify::clean($request->name)]);
-            toast(trans('site.updated successfully', ['attr' => trans_choice('site.courts', 0)]),'success');
-            return back();
+            $courts->update(['name' => $request->name]);
+            
+            $courts = Court::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = Court::onlyTrashed()->get();
+
+            return response()->json([
+                'courtsData' => $courts,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function delete($id)
     {
-        $court = Court::findOrFail($id);
-        if ($court->lawsuites->count() > 0 || $court->caseSessions->count() > 0) {
-            toast(trans('site.should_be_deleted_children_first'), 'warning');
-            return back();
+        try {
+            $court = Court::findOrFail($id);
+            $court->delete();
+            
+            $courts = Court::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = Court::onlyTrashed()->get();
+
+            return response()->json([
+                'courtsData' => $courts,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()]);
         }
-        $court->delete();
-        toast(trans('site.deleted successfully', ['attr' => trans_choice('site.courts', 0)]),'success');
-        return back();
     }
 
     public function forceDelete($id)
