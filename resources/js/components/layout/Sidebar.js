@@ -16,6 +16,9 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import MoneyIcon from '@mui/icons-material/Money';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
@@ -61,6 +64,9 @@ export default function Sidebar({open}) {
   const [open_law, setOpenL] = React.useState(false);
   const [open_status, setOpenS] = React.useState(false);
   const [open_consultation, setOpenCon] = React.useState(false);
+  const [open_expenses, setOpenExp] = React.useState(false);
+  const [open_reports, setOpenRep] = React.useState(false);
+  const [open_settings, setOpenSet] = React.useState(false);
 
   const handleClick = (event, index) => {
     if (index == "open_client") {
@@ -70,7 +76,13 @@ export default function Sidebar({open}) {
     }else if (index == "open_status") {
       setOpenS(!open_status);
     }else if (index == "open_consultation") {
-      setOpenS(!setOpenCon);
+      setOpenCon(!open_consultation);
+    }else if (index == "open_expenses") {
+      setOpenExp(!open_expenses);
+    }else if (index == "open_reports") {
+      setOpenRep(!open_reports);
+    }else if (index == "open_settings") {
+      setOpenSet(!open_settings);
     }
   };
 
@@ -93,7 +105,9 @@ export default function Sidebar({open}) {
           )
         }
       </List>
+
       <Divider />
+
       <List component="nav" aria-label="secondary mailbox folder">
         <ListItemButton
           selected={selectedIndex === 0}
@@ -131,7 +145,9 @@ export default function Sidebar({open}) {
           </ListItemIcon>
           <ListItemText primary="Roles" />
         </ListItemButton>
+
         <Divider />
+
         <ListItemButton onClick={(event) => handleClick(event, "open_client")}>
           <ListItemIcon>
             <Person4Icon />
@@ -157,7 +173,9 @@ export default function Sidebar({open}) {
             </ListItemButton>
           </List>
         </Collapse>
+
         <Divider />
+
         <ListItemButton onClick={(event) => handleClick(event, "open_law")}>
           <ListItemIcon>
             <GavelIcon />
@@ -232,7 +250,7 @@ export default function Sidebar({open}) {
               onClick={(event) => handleListItemClick(event, 14)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="Add new Lawsuite" />
+              <ListItemText primary="finished" />
             </ListItemButton>
           </List>
           <List component="div" disablePadding>
@@ -241,7 +259,7 @@ export default function Sidebar({open}) {
               onClick={(event) => handleListItemClick(event, 15)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="Add new Lawsuite" />
+              <ListItemText primary="suspended" />
             </ListItemButton>
           </List>
           <List component="div" disablePadding>
@@ -250,7 +268,7 @@ export default function Sidebar({open}) {
               onClick={(event) => handleListItemClick(event, 16)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="Add new Lawsuite" />
+              <ListItemText primary="under studying" />
             </ListItemButton>
           </List>
           <List component="div" disablePadding>
@@ -259,13 +277,22 @@ export default function Sidebar({open}) {
               onClick={(event) => handleListItemClick(event, 17)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="Add new Lawsuite" />
+              <ListItemText primary="rejected" />
+            </ListItemButton>
+          </List>
+          <List component="div" disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 18}
+              onClick={(event) => handleListItemClick(event, 18)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="root" />
             </ListItemButton>
           </List>
         </Collapse>
         <ListItemButton
-          selected={selectedIndex === 18}
-          onClick={(event) => handleListItemClick(event, 18)}
+          selected={selectedIndex === 19}
+          onClick={(event) => handleListItemClick(event, 19)}
         >
           <ListItemIcon>
             <ReceiptIcon />
@@ -273,8 +300,8 @@ export default function Sidebar({open}) {
           <ListItemText primary="Payments Lawsuites" />
         </ListItemButton>
         <ListItemButton
-          selected={selectedIndex === 19}
-          onClick={(event) => handleListItemClick(event, 19)}
+          selected={selectedIndex === 20}
+          onClick={(event) => handleListItemClick(event, 20)}
         >
           <ListItemIcon>
             <CalendarMonthIcon />
@@ -282,41 +309,170 @@ export default function Sidebar({open}) {
           <ListItemText primary="All Sessions" />
         </ListItemButton>
         <ListItemButton
-          selected={selectedIndex === 20}
-          onClick={(event) => handleListItemClick(event, 20)}
+          selected={selectedIndex === 21}
+          onClick={(event) => handleListItemClick(event, 21)}
         >
           <ListItemIcon>
             <FolderOpenIcon />
           </ListItemIcon>
           <ListItemText primary="All Documents" />
         </ListItemButton>
+
+        <Divider />
+
+        <ListItemButton onClick={(event) => handleClick(event, "open_consultation")}>
+          <ListItemIcon>
+            <QuestionMarkIcon />
+          </ListItemIcon>
+          <ListItemText primary="Consultations" />
+          {open_consultation ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open_consultation} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 22}
+              onClick={(event) => handleListItemClick(event, 22)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Add new Consultation" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 23}
+              onClick={(event) => handleListItemClick(event, 23)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="All Consultations" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+        <ListItemButton
+          selected={selectedIndex === 24}
+          onClick={(event) => handleListItemClick(event, 24)}
+        >
+          <ListItemIcon>
+            <ReceiptIcon />
+          </ListItemIcon>
+          <ListItemText primary="Payments Consultations" />
+        </ListItemButton>
+
+        <Divider />
+
+        <ListItemButton onClick={(event) => handleClick(event, "open_expenses")}>
+          <ListItemIcon>
+            <MoneyIcon />
+          </ListItemIcon>
+          <ListItemText primary="Expenses" />
+          {open_expenses ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open_expenses} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 25}
+              onClick={(event) => handleListItemClick(event, 25)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Branches" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 26}
+              onClick={(event) => handleListItemClick(event, 26)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Sections Expenses" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 27}
+              onClick={(event) => handleListItemClick(event, 27)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Expenses" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+
+        <Divider />
+
+        <ListItemButton onClick={(event) => handleClick(event, "open_reports")}>
+          <ListItemIcon>
+            <SummarizeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Reports" />
+          {open_reports ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open_reports} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 28}
+              onClick={(event) => handleListItemClick(event, 28)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Reports Sessions" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 28}
+              onClick={(event) => handleListItemClick(event, 28)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Reports Lawsuites" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 29}
+              onClick={(event) => handleListItemClick(event, 29)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Reports Clients" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 30}
+              onClick={(event) => handleListItemClick(event, 30)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Reports Payments Lawsuites" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 31}
+              onClick={(event) => handleListItemClick(event, 31)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Reports Payments Consultations" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 32}
+              onClick={(event) => handleListItemClick(event, 32)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Reports Expenses" />
+            </ListItemButton>
+          </List>
+        </Collapse>
+        <Divider />
+
+        <ListItemButton onClick={(event) => handleClick(event, "open_settings")}>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Advanced Settings" />
+          {open_settings ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open_settings} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItemButton
+              selected={selectedIndex === 28}
+              onClick={(event) => handleListItemClick(event, 28)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Settings" />
+            </ListItemButton>
+            <ListItemButton
+              selected={selectedIndex === 28}
+              onClick={(event) => handleListItemClick(event, 28)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="Backups" />
+            </ListItemButton>
+          </List>
+        </Collapse>
       </List>
-      <Divider />
-      <ListItemButton onClick={(event) => handleClick(event, "open_consultation")}>
-        <ListItemIcon>
-          <QuestionMarkIcon />
-        </ListItemIcon>
-        <ListItemText primary="Consultations" />
-        {open_consultation ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open_consultation} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton
-            selected={selectedIndex === 21}
-            onClick={(event) => handleListItemClick(event, 21)}
-            sx={{ pl: 4 }}
-          >
-            <ListItemText primary="category" />
-          </ListItemButton>
-          <ListItemButton
-            selected={selectedIndex === 22}
-            onClick={(event) => handleListItemClick(event, 22)}
-            sx={{ pl: 4 }}
-          >
-            <ListItemText primary="All Clients" />
-          </ListItemButton>
-        </List>
-      </Collapse>
     </Box>
   );
 }
