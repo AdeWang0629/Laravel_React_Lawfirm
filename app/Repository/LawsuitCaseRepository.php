@@ -11,9 +11,17 @@ class LawsuitCaseRepository implements LawsuitCaseRepositoryInterface {
 
     public function index()
     {
-        $lawsuitCases = LawsuitCase::withCount('lawsuites')->orderByDesc('id')->get();
-        $trashed = LawsuitCase::onlyTrashed()->get();
-        return view('admin.lawsuits-cases.index', compact('lawsuitCases', 'trashed'));
+        try {
+            $lawsuitCases = LawsuitCase::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = LawsuitCase::onlyTrashed()->get();
+
+            return response()->json([
+                'lawsuitCasesData' => $lawsuitCases,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function trashed()
@@ -26,14 +34,20 @@ class LawsuitCaseRepository implements LawsuitCaseRepositoryInterface {
     {
         try {
             LawsuitCase::create([
-                'name' => Purify::clean($request->name),
-                'color' => Purify::clean($request->color),
+                'name' => $request->name,
+                'color' => $request->color,
             ]);
-            toast(trans('site.created successfully', ['attr' => trans_choice('site.status', 0) .' '. trans_choice('site.lawsuites', 0)]),'success');
-            return back();
+            
+            $lawsuitCases = LawsuitCase::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = LawsuitCase::onlyTrashed()->get();
+
+            return response()->json([
+                'lawsuitCasesData' => $lawsuitCases,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -42,27 +56,40 @@ class LawsuitCaseRepository implements LawsuitCaseRepositoryInterface {
         try {
             $lawsuitCase = LawsuitCase::findOrFail($id);
             $lawsuitCase->update([
-                'name' => Purify::clean($request->name),
-                'color' => Purify::clean($request->color),
+                'name' => $request->name,
+                'color' => $request->color,
             ]);
-            toast(trans('site.updated successfully', ['attr' => trans_choice('site.status', 0) .' '. trans_choice('site.lawsuites', 0)]),'success');
-            return back();
+            
+            $lawsuitCases = LawsuitCase::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = LawsuitCase::onlyTrashed()->get();
+
+            return response()->json([
+                'lawsuitCasesData' => $lawsuitCases,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function delete($id)
     {
-        $lawsuitCase = LawsuitCase::findOrFail($id);
-        if ($lawsuitCase->lawsuites->count() > 0) {
-            toast(trans('site.should_be_deleted_children_first'), 'warning');
-            return back();
+        try {
+            $lawsuitCase = LawsuitCase::findOrFail($id);
+            $lawsuitCase->delete();
+            
+            $lawsuitCases = LawsuitCase::withCount('lawsuites')->orderByDesc('id')->get();
+            $trashed = LawsuitCase::onlyTrashed()->get();
+
+            return response()->json([
+                'lawsuitCasesData' => $lawsuitCases,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()]);
         }
-        $lawsuitCase->delete();
-        toast(trans('site.deleted successfully', ['attr' => trans_choice('site.status', 0) .' '. trans_choice('site.lawsuites', 0)]),'success');
-        return back();
     }
 
     public function forceDelete($id)

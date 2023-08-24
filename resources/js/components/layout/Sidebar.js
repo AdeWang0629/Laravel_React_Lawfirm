@@ -40,7 +40,8 @@ export default function Sidebar({open}) {
     '/lawsuites/create',
     '/lawsuites',
     '/lawsuites-papers',
-    '/case-types'
+    '/case-types',
+    '/lawsuit-cases'
   ];
 
   const user = JSON.parse(localStorage.getItem('user'));

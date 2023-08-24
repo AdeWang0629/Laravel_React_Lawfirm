@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Admin\ClientTypeController;
 use App\Http\Controllers\Api\Admin\LawsuiteController;
 use App\Http\Controllers\Api\Admin\LawsuitePaperController;
 use App\Http\Controllers\Api\Admin\CaseTypeController;
+use App\Http\Controllers\Api\Admin\LawsuitCaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,5 +64,11 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::delete('case-types/{case_type}/force-delete', 'CaseTypeController@forceDelete')->name('case-types.force.delete');
         Route::get('case-types/trashed', 'CaseTypeController@trashed')->name('case-types.trashed');
         Route::resource('case-types', CaseTypeController::class)->except(['create','show','edit']);
+
+        //start LawsuitCaseController
+        Route::post('lawsuit-cases/{lawsuit_case}/restore', 'LawsuitCaseController@restore')->name('lawsuit-cases.restore');
+        Route::delete('lawsuit-cases/{lawsuit_case}/force-delete', 'LawsuitCaseController@forceDelete')->name('lawsuit-cases.force.delete');
+        Route::get('lawsuit-cases/trashed', 'LawsuitCaseController@trashed')->name('lawsuit-cases.trashed');
+        Route::resource('lawsuit-cases', LawsuitCaseController::class)->except(['create','show','edit']);
     });
 });

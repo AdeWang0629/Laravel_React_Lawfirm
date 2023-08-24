@@ -83,6 +83,45 @@ function* deleteCaseTypes(action) {
     }
 }
 
+function* getCaseLawsuite() {
+    try{
+        const response = yield call(() => getCustomRequest('api/admin/lawsuit-cases'));
+        yield put({type:actions.GETCASELAWSUITESUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* createCaseLawsuite(action) {
+    try{
+        const response = yield call(() => postCustomRequest('api/admin/lawsuit-cases', action.payload));
+        toast.success("Case Lawsuite Creating was successful.");
+        yield put({type:actions.GETCASELAWSUITESUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* updateCaseLawsuite(action) {
+    try{
+        const response = yield call(() => putCustomRequest('api/admin/lawsuit-cases', action.id, action.payload));
+        toast.success("Case Lawsuite Updating was successful.");
+        yield put({type:actions.GETCASELAWSUITESUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* deleteCaseLawsuite(action) {
+    try{
+        const response = yield call(() => deleteCustomRequest('api/admin/lawsuit-cases', action.payload));
+        toast.success("Case Lawsuite deleting was successful.");
+        yield put({type:actions.GETCASELAWSUITESUCCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeLatest(actions.GETCREATELAWSUITES, getCreateLawsuites)]);
     yield all([takeLatest(actions.CREATELAWSUITES, createLawsuites)]);
@@ -92,4 +131,8 @@ export default function* rootSaga() {
     yield all([takeLatest(actions.CREATECASETYPES, createCaseTypes)]);
     yield all([takeLatest(actions.UPDATECASETYPES, updateCaseTypes)]);
     yield all([takeLatest(actions.DELETECASETYPES, deleteCaseTypes)]);
+    yield all([takeLatest(actions.GETCASELAWSUITE, getCaseLawsuite)]);
+    yield all([takeLatest(actions.CREATECASELAWSUITE, createCaseLawsuite)]);
+    yield all([takeLatest(actions.UPDATECASELAWSUITE, updateCaseLawsuite)]);
+    yield all([takeLatest(actions.DELETECASELAWSUITE, deleteCaseLawsuite)]);
 }

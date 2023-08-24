@@ -65,7 +65,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import PropTypes from 'prop-types';
-
+import {MuiColorInput} from 'mui-color-input'; 
 //Table Style
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -107,6 +107,11 @@ function TablePaginationActions(props) {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
+  const [value, setValue] = useState('#ffffff')
+
+  const handleChange = (newValue) => {
+    setValue(newValue)
+  }
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
       <IconButton
@@ -148,7 +153,8 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function caseTypes({...others}){
+
+export default function lawsuitCases({...others}){
     const dispatch = useDispatch();
     const [rows, setRows] = useState([]);
     const data = useSelector((state)=> state.lawsuiteReducer);
@@ -158,41 +164,49 @@ export default function caseTypes({...others}){
 
     useEffect(()=>{
         dispatch({
-            type: actions.GETCASETYPES
+            type: actions.GETCASELAWSUITE
         });
     },[]);
 
     useEffect(()=>{
-        setRows(data.caseTypesData);
+        setRows(data.lawsuiteCasesData);
     });
 
     const [row, setRow] = useState();
 
-    const [openAddNewCategoryModal, setOpenAddNewCategoryModal] = useState(false);
-    const addNewCategory = () => {
-        setOpenAddNewCategoryModal(true);
+    const [openAddNewCaseLawsuiteModal, setOpenAddNewCaseLawsuiteModal] = useState(false);
+    const addNewCaseLawsuite = () => {
+        setOpenAddNewCaseLawsuiteModal(true);
     }
-    const handleCloseAddNewCategoryModal = () => {
-        setOpenAddNewCategoryModal(false);
+    const handleCloseAddNewCaseLawsuiteModal = () => {
+        setOpenAddNewCaseLawsuiteModal(false);
     };
 
-    const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
-    const editCategoryClient = (row) => {
-        setOpenEditCategoryModal(true);
+    const [openEditCaseLawsuiteModal, setOpenEditCaseLawsuiteModal] = useState(false);
+    const editCaseLawsuite = (row) => {
+        setOpenEditCaseLawsuiteModal(true);
         setRow(row);
     }
     const handleCloseEditCategoryModal = () => {
-        setOpenEditCategoryModal(false);
+        setOpenEditCaseLawsuiteModal(false);
     };
 
-    const [openDeleteCategoryModal, setOpenDeleteCategoryModal] = useState(false);
-    const deleteCategoryModal = (row) => {
-        setOpenDeleteCategoryModal(true);
+    const [openDeleteCaseLawsuiteModal, setOpenDeleteCaseLawsuiteModal] = useState(false);
+    const deleteCaseLawsuite = (row) => {
+        setOpenDeleteCaseLawsuiteModal(true);
         setRow(row);
     }
-    const handleCloseDeleteCategoryModal = () => {
-        setOpenDeleteCategoryModal(false);
+    const handleCloseDeleteCaseLawsuiteModal = () => {
+        setOpenDeleteCaseLawsuiteModal(false);
     };
+
+    const caseLawsuiteDeleteLinkClick = (data) => {
+        dispatch({
+            type: actions.DELETECASELAWSUITE,
+            payload: data.row.id
+        });
+        setOpenDeleteCaseLawsuiteModal(false);
+    }
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -212,9 +226,9 @@ export default function caseTypes({...others}){
 
     useEffect(()=>{
         setRow('');
-        setOpenAddNewCategoryModal(false);
-        setOpenEditCategoryModal(false);
-        setOpenDeleteCategoryModal(false);
+        setOpenAddNewCaseLawsuiteModal(false);
+        setOpenEditCaseLawsuiteModal(false);
+        setOpenDeleteCaseLawsuiteModal(false);
     }, [data]);
 
     const caseTypesDeleteLinkClick = (data) => {
@@ -223,6 +237,25 @@ export default function caseTypes({...others}){
             payload: data.row.id
         });
     }
+
+    const handleColorChange = (color, setFieldValue) => {
+        const hexColor = rgbToHex(color);
+        setFieldValue('color', hexColor);
+      };
+      
+    const rgbToHex = (rgbColor) => {
+    // Split the RGB color string into individual values
+    const rgbValues = rgbColor.slice(4, -1).split(',');
+    
+    // Convert each RGB value to hexadecimal format
+    const hexValues = rgbValues.map((value) => {
+        const hexValue = parseInt(value.trim()).toString(16);
+        return hexValue.padStart(2, '0');
+    });
+    
+    // Combine the hexadecimal values and add the '#' prefix
+    return '#' + hexValues.join('');
+    };
 
     return (
         <Index>
@@ -236,8 +269,8 @@ export default function caseTypes({...others}){
                             </Breadcrumbs>
                         </Grid>
                         <Grid item style={{marginBottom: 10}}>
-                            <Button size="small" variant="contained" color='primary' style={{marginRight: 10}} onClick={() => addNewCategory()}>
-                                Add new category
+                            <Button size="small" variant="contained" color='primary' style={{marginRight: 10}} onClick={() => addNewCaseLawsuite()}>
+                                Add new case Lawsuite
                                 <AddIcon/>
                             </Button>
                         </Grid>
@@ -246,10 +279,10 @@ export default function caseTypes({...others}){
                 <Box>
                     <Card xs={{display: 'flex'}} style={{padding: '20px 20px'}}>
                         <Typography varient='h4' mb={.5} className='weight-7'>
-                            LAWSUITES
+                            STATUS LAWSUITES
                         </Typography>
                         <Typography className='text-secondary'>
-                            Here you can add or edit and all actions Newspapers case...
+                            Here you can add or edit and all actions status Lawsuites...
                         </Typography>
 
                         <Box mt={5}>
@@ -258,7 +291,10 @@ export default function caseTypes({...others}){
                                     <TableHead>
                                     <TableRow>
                                         <StyledTableCell align="center">
-                                            <Typography>CATEGORY NAME</Typography>
+                                            <Typography>CASE LAWSUITE</Typography>
+                                        </StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <Typography>COLOR</Typography>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Typography>CASES COUNTS</Typography>
@@ -282,15 +318,16 @@ export default function caseTypes({...others}){
                                                 </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
+                                                <Chip label={row.color} size="small" style={{backgroundColor: `${row.color}`, color: 'white', width: '100px'}} />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="center">
                                                 <Typography color='blue'>
                                                     {row.lawsuites_count}
                                                 </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                                <Typography>
-                                                    <EditIcon color="success"  style={{ cursor: 'pointer', marginRight: 15}} onClick={() => editCategoryClient(row)}/>
-                                                    <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => deleteCategoryModal(row)} />
-                                                </Typography>
+                                                <EditIcon color="success" style={{ cursor: 'pointer', marginRight: 20}} onClick={()=>editCaseLawsuite(row)}/>
+                                                <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => deleteCaseLawsuite(row)} />
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
                                                 {formate_date(row.created_at)}
@@ -330,17 +367,18 @@ export default function caseTypes({...others}){
                 </Box>
 
                 <Dialog
-                    open={openAddNewCategoryModal}
-                    onClose={handleCloseAddNewCategoryModal}
+                    open={openAddNewCaseLawsuiteModal}
+                    onClose={handleCloseAddNewCaseLawsuiteModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Add New Category"}
+                    {"Add New case Lawsuite"}
                     </DialogTitle>
                     <Formik
                         initialValues={{
                             name: '',
+                            color: '#ffffff',
                             submit: null
                         }}
                         validationSchema={Yup.object().shape({
@@ -353,7 +391,7 @@ export default function caseTypes({...others}){
                                 setSubmitting(false);
 
                                 dispatch({
-                                    type: actions.CREATECASETYPES,
+                                    type: actions.CREATECASELAWSUITE,
                                     payload: values,
                                 });
                             }
@@ -369,29 +407,43 @@ export default function caseTypes({...others}){
                     >
                         {({ errors, handleBlur, handleChange, handleSubmit, setFieldValue, isSubmitting, touched, values }) => (
                         <form noValidate onSubmit={handleSubmit} {...others}>
-                            <DialogContent>
-                                <Box width={500}>
-                                    <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
-                                        <InputLabel htmlFor="outlined-adornment-name- clients_types_create">Caegory Name</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-name-user_create"
-                                            type="text"
-                                            name="name"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            label="Caegory Name"
-                                            inputProps={{}}
-                                        />
-                                        {touched.name && errors.name && (
-                                            <FormHelperText error id="standard-weight-helper-text-name-clients_types_create">
-                                            {errors.name}
-                                            </FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </Box>
+                            <DialogContent style={{width: '600px'}}>
+                                <Grid container columns={{xs:2, sm:8, md:16}} justifyContent='space-between'>
+                                    <Grid item xs={2} sm={4} md={7.5}>
+                                        <FormControl fullWidth error={Boolean(touched.color && errors.color)} sx={{ ...theme.typography.customInput}}>
+
+                                            <MuiColorInput value={values.color} onChange={(color) => handleColorChange(color, setFieldValue)} onBlur={handleBlur} name='color' id="outlined-adornment-case-lawsuite-color" />
+
+                                            {touched.color && errors.color && (
+                                                <FormHelperText error id="outlined-adornment-case-lawsuite-color">
+                                                {errors.color}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={2} sm={4} md={7.5}>
+                                        <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
+                                            <InputLabel htmlFor="outlined-adornment-case-lawsuite-name">case Lawsuite</InputLabel>
+                                            <OutlinedInput
+                                                id="outlined-adornment-case-lawsuite-name"
+                                                type="text"
+                                                name="name"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                label="case Lawsuite"
+                                                inputProps={{}}
+                                            />
+                                            {touched.name && errors.name && (
+                                                <FormHelperText error id="outlined-adornment-case-lawsuite-name">
+                                                {errors.name}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleCloseAddNewCategoryModal}>Cancel</Button>
+                                <Button onClick={handleCloseAddNewCaseLawsuiteModal}>Cancel</Button>
                                 <Button disableElevation disabled={isSubmitting} size="large" type="submit" variant="contained" color="secondary">
                                     Add
                                 </Button>
@@ -402,17 +454,18 @@ export default function caseTypes({...others}){
                 </Dialog>
 
                 <Dialog
-                    open={openEditCategoryModal}
+                    open={openEditCaseLawsuiteModal}
                     onClose={handleCloseEditCategoryModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Update Category"}
+                    {"Update case Lawsuite"}
                     </DialogTitle>
                     <Formik
                         initialValues={{
                             name: row ? row.name : '',
+                            color: row ? row.color: '',
                             submit: null
                         }}
                         validationSchema={Yup.object().shape({
@@ -425,7 +478,7 @@ export default function caseTypes({...others}){
                                 setSubmitting(false);
 
                                 dispatch({
-                                    type: actions.UPDATECASETYPES,
+                                    type: actions.UPDATECASELAWSUITE,
                                     payload: values,
                                     id: row.id
                                 });
@@ -443,26 +496,40 @@ export default function caseTypes({...others}){
                         {({ errors, handleBlur, handleChange, handleSubmit, setFieldValue, isSubmitting, touched, values }) => (
                         <form noValidate onSubmit={handleSubmit} {...others}>
                             <DialogContent>
-                                <Box width={500}>
-                                    <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
-                                        <InputLabel htmlFor="outlined-adornment-name- clients_types_create">Caegory Name</InputLabel>
-                                        <OutlinedInput
-                                            id="outlined-adornment-name-user_create"
-                                            type="text"
-                                            name="name"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            label="Caegory Name"
-                                            value={values.name}
-                                            inputProps={{}}
-                                        />
-                                        {touched.name && errors.name && (
-                                            <FormHelperText error id="standard-weight-helper-text-name-clients_types_create">
-                                            {errors.name}
-                                            </FormHelperText>
-                                        )}
-                                    </FormControl>
-                                </Box>
+                                <Grid container columns={{xs:2, sm:8, md:16}} justifyContent='space-between'>
+                                    <Grid item xs={2} sm={4} md={7.5}>
+                                        <FormControl fullWidth error={Boolean(touched.color && errors.color)} sx={{ ...theme.typography.customInput}}>
+
+                                            <MuiColorInput value={values.color} onChange={(color) => handleColorChange(color, setFieldValue)} onBlur={handleBlur} name='color' id="outlined-adornment-case-lawsuite-color" />
+
+                                            {touched.color && errors.color && (
+                                                <FormHelperText error id="outlined-adornment-case-lawsuite-color">
+                                                {errors.color}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={2} sm={4} md={7.5}>
+                                        <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
+                                            <InputLabel htmlFor="outlined-adornment-case-lawsuite-name">case Lawsuite</InputLabel>
+                                            <OutlinedInput
+                                                id="outlined-adornment-case-lawsuite-name"
+                                                type="text"
+                                                name="name"
+                                                onBlur={handleBlur}
+                                                onChange={handleChange}
+                                                label="case Lawsuite"
+                                                value={values.name}
+                                                inputProps={{}}
+                                            />
+                                            {touched.name && errors.name && (
+                                                <FormHelperText error id="outlined-adornment-case-lawsuite-name">
+                                                {errors.name}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={handleCloseEditCategoryModal}>Cancel</Button>
@@ -476,8 +543,8 @@ export default function caseTypes({...others}){
                 </Dialog>
                 
                 <Dialog
-                    open={openDeleteCategoryModal}
-                    onClose={handleCloseDeleteCategoryModal}
+                    open={openDeleteCaseLawsuiteModal}
+                    onClose={handleCloseDeleteCaseLawsuiteModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
@@ -490,8 +557,8 @@ export default function caseTypes({...others}){
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={handleCloseDeleteCategoryModal}>Cancel</Button>
-                    <Button onClick={() => caseTypesDeleteLinkClick({row})} autoFocus color='error'>
+                    <Button onClick={handleCloseDeleteCaseLawsuiteModal}>Cancel</Button>
+                    <Button onClick={() => caseLawsuiteDeleteLinkClick({row})} autoFocus color='error'>
                         Delete
                     </Button>
                     </DialogActions>
