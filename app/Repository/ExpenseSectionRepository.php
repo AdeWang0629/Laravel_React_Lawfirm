@@ -12,9 +12,17 @@ class ExpenseSectionRepository implements ExpenseSectionRepositoryInterface {
 
     public function index()
     {
-        $expense_sections = ExpenseSection::with('payments')->orderByDesc('id')->get();
-        $trashed = ExpenseSection::onlyTrashed()->get();
-        return view('admin.expense-sections.index', compact('expense_sections', 'trashed'));
+        try {
+            $expense_sections = ExpenseSection::with('payments')->orderByDesc('id')->get();
+            $trashed = ExpenseSection::onlyTrashed()->get();
+
+            return response()->json([
+                'expenseSectionsData' => $expense_sections,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function trashed()
@@ -26,36 +34,54 @@ class ExpenseSectionRepository implements ExpenseSectionRepositoryInterface {
     public function store($request)
     {
         try {
-            ExpenseSection::create(['name' => Purify::clean($request->name)]);
-            toast(trans('site.created successfully', ['attr' => removebeginninLetters(trans_choice('site.sections', 0), 2) ]),'success');
-            return back();
+            ExpenseSection::create(['name' => $request->name]);
+
+            $expense_sections = ExpenseSection::with('payments')->orderByDesc('id')->get();
+            $trashed = ExpenseSection::onlyTrashed()->get();
+
+            return response()->json([
+                'expenseSectionsData' => $expense_sections,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function update($request, $expense_section)
     {
         try {
-            $expense_section->update(['name' => Purify::clean($request->name)]);
-            toast(trans('site.updated successfully', ['attr' => trans_choice('site.sections', 0) ]),'success');
-            return back();
+            $expense_section->update(['name' => $request->name]);
+            
+            $expense_sections = ExpenseSection::with('payments')->orderByDesc('id')->get();
+            $trashed = ExpenseSection::onlyTrashed()->get();
+
+            return response()->json([
+                'expenseSectionsData' => $expense_sections,
+                'trashedData' => $trashed
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function delete($expense_section)
     {
-        if ($expense_section->payments->count() > 0) {
-            toast(trans('site.should_be_deleted_children_first'), 'warning');
-            return back();
+        try {
+            $expense_section->delete();
+            
+            $expense_sections = ExpenseSection::with('payments')->orderByDesc('id')->get();
+            $trashed = ExpenseSection::onlyTrashed()->get();
+
+            return response()->json([
+                'expenseSectionsData' => $expense_sections,
+                'trashedData' => $trashed
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()]);
         }
-        $expense_section->delete();
-        toast(trans('site.deleted successfully', ['attr' => trans_choice('site.sections', 0) ]),'success');
-        return back();
     }
 
     public function forceDelete($id)

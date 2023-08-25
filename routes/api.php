@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Admin\CaseStageController;
 use App\Http\Controllers\Api\Admin\CaseSessionController;
 use App\Http\Controllers\Api\Admin\ConsultationController;
 use App\Http\Controllers\Api\Admin\BranchController;
+use App\Http\Controllers\Api\Admin\ExpenseSectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,5 +101,11 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::delete('branches/{branch}/force-delete', 'BranchController@forceDelete')->name('branches.force.delete');
         Route::get('branches/trashed', 'BranchController@trashed')->name('branches.trashed');
         Route::resource('branches', BranchController::class)->except(['create','show','edit']);
+
+        //start ExpenseSectionController
+        Route::post('expense-sections/{expense_section}/restore', 'ExpenseSectionController@restore')->name('expense-sections.restore');
+        Route::delete('expense-sections/{expense_section}/force-delete', 'ExpenseSectionController@forceDelete')->name('expense-sections.force.delete');
+        Route::get('expense-sections/trashed', 'ExpenseSectionController@trashed')->name('expense-sections.trashed');
+        Route::resource('expense-sections', ExpenseSectionController::class)->except(['create','show','edit']);
     });
 });

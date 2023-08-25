@@ -106,11 +106,6 @@ function TablePaginationActions(props) {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
-  const [value, setValue] = useState('#ffffff')
-
-  const handleChange = (newValue) => {
-    setValue(newValue)
-  }
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5 }}>
       <IconButton
@@ -153,7 +148,7 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function Branches({...others}){
+export default function ExpenseSections({...others}){
     const dispatch = useDispatch();
     const [rows, setRows] = useState([]);
     const data = useSelector((state)=> state.expensesReducer);
@@ -163,48 +158,48 @@ export default function Branches({...others}){
 
     useEffect(()=>{
         dispatch({
-            type: actions.GETBRANCHES
+            type: actions.GETEXPENSESECTIONS
         });
     },[]);
 
     useEffect(()=>{
-        setRows(data.branchesData);
+        setRows(data.expenseSectionsData);
     });
 
     const [row, setRow] = useState();
 
-    const [openAddNewBranchModal, setOpenAddNewBranchModal] = useState(false);
-    const addNewBranch = () => {
-        setOpenAddNewBranchModal(true);
+    const [openAddNewExpenseSectionsModal, setOpenAddNewExpenseSectionsModal] = useState(false);
+    const addNewExpenseSections = () => {
+        setOpenAddNewExpenseSectionsModal(true);
     }
-    const handleCloseAddNewBranchModal = () => {
-        setOpenAddNewBranchModal(false);
+    const handleCloseAddNewExpenseSectionsModal = () => {
+        setOpenAddNewExpenseSectionsModal(false);
     };
 
-    const [openEditBranchModal, setOpenEditBranchModal] = useState(false);
-    const editBranch = (row) => {
-        setOpenEditBranchModal(true);
+    const [openEditExpenseSectionsModal, setOpenEditExpenseSectionsModal] = useState(false);
+    const editExpenseSections = (row) => {
+        setOpenEditExpenseSectionsModal(true);
         setRow(row);
     }
-    const handleCloseEditBranchModal = () => {
-        setOpenEditBranchModal(false);
+    const handleCloseEditExpenseSectionsModal = () => {
+        setOpenEditExpenseSectionsModal(false);
     };
 
-    const [openDeleteBranchModal, setOpenDeleteBranchModal] = useState(false);
-    const deleteBranch = (row) => {
-        setOpenDeleteBranchModal(true);
+    const [openDeleteExpenseSectionsModal, setOpenDeleteExpenseSectionsModal] = useState(false);
+    const deleteExpenseSections = (row) => {
+        setOpenDeleteExpenseSectionsModal(true);
         setRow(row);
     }
-    const handleCloseDeleteBranchModal = () => {
-        setOpenDeleteBranchModal(false);
+    const handleCloseDeleteExpenseSectionsModal = () => {
+        setOpenDeleteExpenseSectionsModal(false);
     };
 
-    const branchDeleteLinkClick = (data) => {
+    const expenseSectionsDeleteLinkClick = (data) => {
         dispatch({
-            type: actions.DELETEBRANCHES,
+            type: actions.DELETEEXPENSESECTIONS,
             payload: data.row.id
         });
-        setOpenDeleteBranchModal(false);
+        setOpenDeleteExpenseSectionsModal(false);
     }
 
     const [page, setPage] = useState(0);
@@ -225,9 +220,9 @@ export default function Branches({...others}){
 
     useEffect(()=>{
         setRow('');
-        setOpenAddNewBranchModal(false);
-        setOpenEditBranchModal(false);
-        setOpenDeleteBranchModal(false);
+        setOpenAddNewExpenseSectionsModal(false);
+        setOpenEditExpenseSectionsModal(false);
+        setOpenDeleteExpenseSectionsModal(false);
     }, [data]);
 
     return (
@@ -238,12 +233,12 @@ export default function Branches({...others}){
                         <Grid item>
                             <Breadcrumbs aria-label="breadcrumb">
                                 <Typography color="text.primary" variant='h5'>Table</Typography>
-                                <Typography> Branches </Typography>
+                                <Typography> Expense Sections </Typography>
                             </Breadcrumbs>
                         </Grid>
                         <Grid item style={{marginBottom: 10}}>
-                            <Button size="small" variant="contained" color='primary' style={{marginRight: 10}} onClick={() => addNewBranch()}>
-                                Add new Branch
+                            <Button size="small" variant="contained" color='primary' style={{marginRight: 10}} onClick={() => addNewExpenseSections()}>
+                                Add new Sections Expenses
                                 <AddIcon/>
                             </Button>
                         </Grid>
@@ -252,10 +247,10 @@ export default function Branches({...others}){
                 <Box>
                     <Card xs={{display: 'flex'}} style={{padding: '20px 20px'}}>
                         <Typography varient='h4' mb={.5} className='weight-7'>
-                            BRANCHES
+                            SECTIONS EXPENSES
                         </Typography>
                         <Typography className='text-secondary'>
-                            Here you can add or edit and all actions Branches...
+                            Here you can add or edit and all actions Sections Expenses...
                         </Typography>
 
                         <Box mt={5}>
@@ -264,10 +259,10 @@ export default function Branches({...others}){
                                     <TableHead>
                                     <TableRow>
                                         <StyledTableCell align="center">
-                                            <Typography>BRANCH</Typography>
+                                            <Typography>SECTION NAME</Typography>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <Typography>SITE.INVOICES_COUNTS_IN_BRANCHE</Typography>
+                                            <Typography>INVOICES COUNTS IN THIS SECTION</Typography>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Typography>TOTAL</Typography>
@@ -301,8 +296,8 @@ export default function Branches({...others}){
                                                 </Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
-                                                <EditIcon color="success" style={{ cursor: 'pointer', marginRight: 20}} onClick={()=> editBranch(row)}/>
-                                                <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => deleteBranch(row)} />
+                                                <EditIcon color="success" style={{ cursor: 'pointer', marginRight: 20}} onClick={()=> editExpenseSections(row)}/>
+                                                <DeleteIcon color="error" style={{ cursor: 'pointer' }} onClick={() => deleteExpenseSections(row)} />
                                             </StyledTableCell>
                                             <StyledTableCell align="center">
                                                 {formate_date(row.created_at)}
@@ -342,13 +337,13 @@ export default function Branches({...others}){
                 </Box>
 
                 <Dialog
-                    open={openAddNewBranchModal}
-                    onClose={handleCloseAddNewBranchModal}
+                    open={openAddNewExpenseSectionsModal}
+                    onClose={handleCloseAddNewExpenseSectionsModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Add new Branch"}
+                    {"Add new Section Expenses"}
                     </DialogTitle>
                     <Formik
                         initialValues={{
@@ -364,7 +359,7 @@ export default function Branches({...others}){
                                 setStatus({ success: true });
                                 setSubmitting(false);
                                 dispatch({
-                                    type: actions.CREATEBRANCHES,
+                                    type: actions.CREATEEXPENSESECTIONS,
                                     payload: values,
                                 });
                             }
@@ -384,7 +379,7 @@ export default function Branches({...others}){
                                 <Grid container columns={{xs:2, sm:8, md:16}}>
                                     <Grid item xs={2} sm={8} md={16}>
                                         <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
-                                            <InputLabel htmlFor="outlined-adornment-case-lawsuite-name">Branch</InputLabel>
+                                            <InputLabel htmlFor="outlined-adornment-case-lawsuite-name">Section Expenses</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-case-lawsuite-name"
                                                 type="text"
@@ -404,7 +399,7 @@ export default function Branches({...others}){
                                 </Grid>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleCloseAddNewBranchModal}>Cancel</Button>
+                                <Button onClick={handleCloseAddNewExpenseSectionsModal}>Cancel</Button>
                                 <Button disableElevation disabled={isSubmitting} size="large" type="submit" variant="contained" color="secondary">
                                     Add
                                 </Button>
@@ -415,13 +410,13 @@ export default function Branches({...others}){
                 </Dialog>
 
                 <Dialog
-                    open={openEditBranchModal}
-                    onClose={handleCloseEditBranchModal}
+                    open={openEditExpenseSectionsModal}
+                    onClose={handleCloseEditExpenseSectionsModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
                     <DialogTitle id="alert-dialog-title">
-                    {"Update Court"}
+                    {"Expenses Section Update"}
                     </DialogTitle>
                     <Formik
                         initialValues={{
@@ -438,7 +433,7 @@ export default function Branches({...others}){
                                 setSubmitting(false);
 
                                 dispatch({
-                                    type: actions.UPDATEBRANCHES,
+                                    type: actions.UPDATEEXPENSESECTIONS,
                                     payload: values,
                                     id: row.id
                                 });
@@ -459,14 +454,14 @@ export default function Branches({...others}){
                                 <Grid container columns={{xs:2, sm:8, md:16}}>
                                     <Grid item xs={2} sm={8} md={16}>
                                         <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput}}>
-                                            <InputLabel htmlFor="outlined-adornment-case-lawsuite-name">case Lawsuite</InputLabel>
+                                            <InputLabel htmlFor="outlined-adornment-case-lawsuite-name">Section Expenses</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-case-lawsuite-name"
                                                 type="text"
                                                 name="name"
                                                 onBlur={handleBlur}
                                                 onChange={handleChange}
-                                                label="case Lawsuite"
+                                                label="Section Expenses"
                                                 value={values.name}
                                                 inputProps={{}}
                                             />
@@ -480,7 +475,7 @@ export default function Branches({...others}){
                                 </Grid>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleCloseEditBranchModal}>Cancel</Button>
+                                <Button onClick={handleCloseEditExpenseSectionsModal}>Cancel</Button>
                                 <Button disableElevation disabled={isSubmitting} size="large" type="submit" variant="contained" color="secondary">
                                     Update
                                 </Button>
@@ -491,8 +486,8 @@ export default function Branches({...others}){
                 </Dialog>
                 
                 <Dialog
-                    open={openDeleteBranchModal}
-                    onClose={handleCloseDeleteBranchModal}
+                    open={openDeleteExpenseSectionsModal}
+                    onClose={handleCloseDeleteExpenseSectionsModal}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
                 >
@@ -505,8 +500,8 @@ export default function Branches({...others}){
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={handleCloseDeleteBranchModal}>Cancel</Button>
-                    <Button onClick={() => branchDeleteLinkClick({row})} autoFocus color='error'>
+                    <Button onClick={handleCloseDeleteExpenseSectionsModal}>Cancel</Button>
+                    <Button onClick={() => expenseSectionsDeleteLinkClick({row})} autoFocus color='error'>
                         Delete
                     </Button>
                     </DialogActions>

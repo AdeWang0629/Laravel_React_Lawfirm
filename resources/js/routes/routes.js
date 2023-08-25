@@ -147,4 +147,9 @@ export default [
     component: lazy(() => import('../pages/admin/Expenses/branches')),
     exact: true,
   },
+  {
+    path: 'expense-sections',
+    component: lazy(() => import('../pages/admin/Expenses/ExpenseSections')),
+    exact: true,
+  },
 ]
