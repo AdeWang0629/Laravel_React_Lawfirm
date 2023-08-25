@@ -86,5 +86,65 @@ export default [
     path: 'lawsuites',
     component: lazy(() => import('../pages/admin/Lawsuites')),
     exact: true,
-  }
+  },
+  {
+    path: 'lawsuites-status/1',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'lawsuites-status/2',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'lawsuites-status/3',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'lawsuites-status/4',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'lawsuites-status/5',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'receipts/lawsuites',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'case-sessions',
+    component: lazy(() => import('../pages/admin/CaseSessions')),
+    exact: true,
+  },
+  {
+    path: 'documents',
+    component: lazy(() => import('../pages/admin/CaseSessions')),
+    exact: true,
+  },
+  {
+    path: 'consultations/create',
+    component: lazy(() => import('../pages/admin/Consultations/create')),
+    exact: true,
+  },
+  {
+    path: 'consultations',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'receipts/consultations',
+    component: lazy(() => import('../pages/admin/Lawsuites')),
+    exact: true,
+  },
+  {
+    path: 'branches',
+    component: lazy(() => import('../pages/admin/Expenses/branches')),
+    exact: true,
+  },
 ]

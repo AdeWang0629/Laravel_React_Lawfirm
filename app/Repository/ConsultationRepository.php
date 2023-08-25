@@ -13,10 +13,17 @@ use Stevebauman\Purify\Facades\Purify;
 class ConsultationRepository implements ConsultationRepositoryInterface {
     public function index()
     {
-        $consultations = Consultation::with('client', 'clientAccounts')->when(request('client') != '', function($q) {
-            return $q->whereClientId(request('client'));
-        })->orderBy('id', 'desc')->get();
-        return view('admin.consultations.index', compact('consultations'));
+        try {
+            $consultations = Consultation::with('client', 'clientAccounts')->when(request('client') != '', function($q) {
+                return $q->whereClientId(request('client'));
+            })->orderBy('id', 'desc')->get()->map(function ($item) {
+                return collect($item)->except(['client_id']);
+            });
+
+            return response()->json(['consultationsData' => $consultations], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function show($consultation)

@@ -46,7 +46,19 @@ export default function Sidebar({open}) {
     '/case-types',
     '/lawsuit-cases',
     '/courts',
-    '/case-stages'
+    '/case-stages',
+    '/lawsuites-status/1',
+    '/lawsuites-status/2',
+    '/lawsuites-status/3',
+    '/lawsuites-status/4',
+    '/lawsuites-status/5',
+    '/receipts/lawsuites',
+    '/case-sessions',
+    '/documents',
+    '/consultations/create',
+    '/consultations',
+    '/receipts/consultations',
+    '/branches'
   ];
 
   const user = JSON.parse(localStorage.getItem('user'));
@@ -246,11 +258,20 @@ export default function Sidebar({open}) {
         <Collapse in={open_status} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton
+              selected={selectedIndex === 13}
+              onClick={(event) => handleListItemClick(event, 13)}
+              sx={{ pl: 4 }}
+            >
+              <ListItemText primary="finished" />
+            </ListItemButton>
+          </List>
+          <List component="div" disablePadding>
+            <ListItemButton
               selected={selectedIndex === 14}
               onClick={(event) => handleListItemClick(event, 14)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="finished" />
+              <ListItemText primary="suspended" />
             </ListItemButton>
           </List>
           <List component="div" disablePadding>
@@ -259,7 +280,7 @@ export default function Sidebar({open}) {
               onClick={(event) => handleListItemClick(event, 15)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="suspended" />
+              <ListItemText primary="under studying" />
             </ListItemButton>
           </List>
           <List component="div" disablePadding>
@@ -268,7 +289,7 @@ export default function Sidebar({open}) {
               onClick={(event) => handleListItemClick(event, 16)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="under studying" />
+              <ListItemText primary="rejected" />
             </ListItemButton>
           </List>
           <List component="div" disablePadding>
@@ -277,22 +298,13 @@ export default function Sidebar({open}) {
               onClick={(event) => handleListItemClick(event, 17)}
               sx={{ pl: 4 }}
             >
-              <ListItemText primary="rejected" />
-            </ListItemButton>
-          </List>
-          <List component="div" disablePadding>
-            <ListItemButton
-              selected={selectedIndex === 18}
-              onClick={(event) => handleListItemClick(event, 18)}
-              sx={{ pl: 4 }}
-            >
               <ListItemText primary="root" />
             </ListItemButton>
           </List>
         </Collapse>
         <ListItemButton
-          selected={selectedIndex === 19}
-          onClick={(event) => handleListItemClick(event, 19)}
+          selected={selectedIndex === 18}
+          onClick={(event) => handleListItemClick(event, 18)}
         >
           <ListItemIcon>
             <ReceiptIcon />
@@ -300,8 +312,8 @@ export default function Sidebar({open}) {
           <ListItemText primary="Payments Lawsuites" />
         </ListItemButton>
         <ListItemButton
-          selected={selectedIndex === 20}
-          onClick={(event) => handleListItemClick(event, 20)}
+          selected={selectedIndex === 19}
+          onClick={(event) => handleListItemClick(event, 19)}
         >
           <ListItemIcon>
             <CalendarMonthIcon />
@@ -309,8 +321,8 @@ export default function Sidebar({open}) {
           <ListItemText primary="All Sessions" />
         </ListItemButton>
         <ListItemButton
-          selected={selectedIndex === 21}
-          onClick={(event) => handleListItemClick(event, 21)}
+          selected={selectedIndex === 20}
+          onClick={(event) => handleListItemClick(event, 20)}
         >
           <ListItemIcon>
             <FolderOpenIcon />
@@ -330,15 +342,15 @@ export default function Sidebar({open}) {
         <Collapse in={open_consultation} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton
-              selected={selectedIndex === 22}
-              onClick={(event) => handleListItemClick(event, 22)}
+              selected={selectedIndex === 21}
+              onClick={(event) => handleListItemClick(event, 21)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="Add new Consultation" />
             </ListItemButton>
             <ListItemButton
-              selected={selectedIndex === 23}
-              onClick={(event) => handleListItemClick(event, 23)}
+              selected={selectedIndex === 22}
+              onClick={(event) => handleListItemClick(event, 22)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="All Consultations" />
@@ -346,8 +358,8 @@ export default function Sidebar({open}) {
           </List>
         </Collapse>
         <ListItemButton
-          selected={selectedIndex === 24}
-          onClick={(event) => handleListItemClick(event, 24)}
+          selected={selectedIndex === 23}
+          onClick={(event) => handleListItemClick(event, 23)}
         >
           <ListItemIcon>
             <ReceiptIcon />
@@ -367,22 +379,22 @@ export default function Sidebar({open}) {
         <Collapse in={open_expenses} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton
-              selected={selectedIndex === 25}
-              onClick={(event) => handleListItemClick(event, 25)}
+              selected={selectedIndex === 24}
+              onClick={(event) => handleListItemClick(event, 24)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="Branches" />
             </ListItemButton>
             <ListItemButton
-              selected={selectedIndex === 26}
-              onClick={(event) => handleListItemClick(event, 26)}
+              selected={selectedIndex === 25}
+              onClick={(event) => handleListItemClick(event, 25)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="Sections Expenses" />
             </ListItemButton>
             <ListItemButton
-              selected={selectedIndex === 27}
-              onClick={(event) => handleListItemClick(event, 27)}
+              selected={selectedIndex === 26}
+              onClick={(event) => handleListItemClick(event, 26)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="Expenses" />
@@ -402,8 +414,8 @@ export default function Sidebar({open}) {
         <Collapse in={open_reports} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton
-              selected={selectedIndex === 28}
-              onClick={(event) => handleListItemClick(event, 28)}
+              selected={selectedIndex === 27}
+              onClick={(event) => handleListItemClick(event, 27)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="Reports Sessions" />
@@ -457,15 +469,15 @@ export default function Sidebar({open}) {
         <Collapse in={open_settings} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton
-              selected={selectedIndex === 28}
-              onClick={(event) => handleListItemClick(event, 28)}
+              selected={selectedIndex === 33}
+              onClick={(event) => handleListItemClick(event, 33)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="Settings" />
             </ListItemButton>
             <ListItemButton
-              selected={selectedIndex === 28}
-              onClick={(event) => handleListItemClick(event, 28)}
+              selected={selectedIndex === 34}
+              onClick={(event) => handleListItemClick(event, 34)}
               sx={{ pl: 4 }}
             >
               <ListItemText primary="Backups" />

@@ -254,7 +254,9 @@ function ProtectedRoutes() {
               </IconButton>
             </Toolbar>
             <Divider />
+
             <Sidebar open={open} />
+            
           </Drawer>
         </ThemeProvider>
         <Box

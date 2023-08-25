@@ -4,6 +4,9 @@ import userReducer from './Admin/User/reducer';
 import roleReducer from './Admin/Role/reducer';
 import clientReducer from './Admin/Client/reducer';
 import lawsuiteReducer from './Admin/Lawsuite/reducer';
+import caseSessionReducer from './Admin/CaseSession/reducer';
+import consultationReducer from './Admin/Consultation/reducer';
+import expensesReducer from './Admin/Expenses/reducer';
 
 //Include all the reducer to combine and provide to configure store.
 export default {
@@ -12,5 +15,8 @@ export default {
   userReducer,
   roleReducer,
   clientReducer,
-  lawsuiteReducer
+  lawsuiteReducer,
+  caseSessionReducer,
+  consultationReducer,
+  expensesReducer
 }

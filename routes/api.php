@@ -11,6 +11,10 @@ use App\Http\Controllers\Api\Admin\CaseTypeController;
 use App\Http\Controllers\Api\Admin\LawsuitCaseController;
 use App\Http\Controllers\Api\Admin\CourtController;
 use App\Http\Controllers\Api\Admin\CaseStageController;
+use App\Http\Controllers\Api\Admin\CaseSessionController;
+use App\Http\Controllers\Api\Admin\ConsultationController;
+use App\Http\Controllers\Api\Admin\BranchController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -83,5 +87,18 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::delete('case-stages/{case_stage}/force-delete', 'CaseStageController@forceDelete')->name('case-stages.force.delete');
         Route::get('case-stages/trashed', 'CaseStageController@trashed')->name('case-stages.trashed');
         Route::resource('case-stages', CaseStageController::class)->except(['create','show','edit']);
+
+        //start CaseSessionController
+        Route::resource('case-sessions', CaseSessionController::class)->except(['create']);
+
+        //start ConsultationController
+        Route::resource('consultations', ConsultationController::class);
+        Route::get('consultations/contract/{id}', 'ConsultationController@showContract')->name('show.consultation.contract');
+
+        //start BranchController
+        Route::post('branches/{branch}/restore', 'BranchController@restore')->name('branches.restore');
+        Route::delete('branches/{branch}/force-delete', 'BranchController@forceDelete')->name('branches.force.delete');
+        Route::get('branches/trashed', 'BranchController@trashed')->name('branches.trashed');
+        Route::resource('branches', BranchController::class)->except(['create','show','edit']);
     });
 });

@@ -10,8 +10,13 @@ use Stevebauman\Purify\Facades\Purify;
 class CaseSessionRepository implements CaseSessionRepositoryInterface {
     public function index()
     {
-        $caseSessions = CaseSession::withCount('court', 'lawsuite')->get();
-        return view('admin.case-sessions.index', compact('caseSessions'));
+        try {
+            $caseSessions = CaseSession::with('court', 'lawsuite')->get();
+
+            return response()->json(['caseSessionsData' => $caseSessions], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function store($request)

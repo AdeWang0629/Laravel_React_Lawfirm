@@ -1,0 +1,6 @@
+const actions = {
+  GETCONSULTATION: 'GETCONSULTATION',
+  GETCONSULTATIONSSUCESS: 'GETCONSULTATIONSSUCESS'
+}
+
+export default actions;
