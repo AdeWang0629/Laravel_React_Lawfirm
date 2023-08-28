@@ -15,10 +15,19 @@ use Stevebauman\Purify\Facades\Purify;
 class PaymentRepository implements PaymentRepositoryInterface {
     public function index()
     {
-        $payments = Payment::with('branch', 'expenseSection')->get();
-        $expenseSections = ExpenseSection::get();
-        $branches = Branch::get();
-        return view('admin.payments.index', compact('payments','expenseSections', 'branches'));
+        try {
+            $payments = Payment::with('branch', 'expenseSection')->get();
+            $expenseSections = ExpenseSection::get();
+            $branches = Branch::get();
+
+            return response()->json([
+                'paymentsData' => $payments,
+                'expenseSectionsData' => $expenseSections,
+                'branchesData' => $branches
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function store($request)
@@ -29,28 +38,36 @@ class PaymentRepository implements PaymentRepositoryInterface {
                 'receiver'              => $request->receiver,
                 'voucher_number'        => voucherNumber(),
                 'base_encode'           => base64_encode(lawsuiteCaseNumber().\Illuminate\Support\Str::random(40)),
-                'date'                  => Purify::clean($request->date),
-                'payment_type'          => Purify::clean($request->payment_type),
-                'expense_section_id'    => Purify::clean($request->expense_section_id),
+                'date'                  => $request->date,
+                'payment_type'          => $request->payment_type,
+                'expense_section_id'    => $request->expense_section_id,
                 'branch_id'             => $request->branch_id,
-                'debit'                 => Purify::clean($request->debit),
-                'note'                  => Purify::clean($request->note),
+                'debit'                 => $request->debit,
+                'note'                  => $request->note,
             ]);
 
             FundAccount::create([
-                'date'                  => Purify::clean($request->date),
+                'date'                  => $request->date,
                 'payment_id'            => $payment->id,
                 'debit'                 => 0.00,
-                'credit'                => Purify::clean($request->debit),
-                'note'                  => Purify::clean($request->note),
+                'credit'                => $request->debit,
+                'note'                  => $request->note,
             ]);
 
             DB::commit();
-            toast(trans('site.created successfully', ['attr' => trans_choice('site.expenses', 0)]),'success');
-            return redirect()->back();
+            
+            $payments = Payment::with('branch', 'expenseSection')->get();
+            $expenseSections = ExpenseSection::get();
+            $branches = Branch::get();
+
+            return response()->json([
+                'paymentsData' => $payments,
+                'expenseSectionsData' => $expenseSections,
+                'branchesData' => $branches
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -59,36 +76,57 @@ class PaymentRepository implements PaymentRepositoryInterface {
         DB::beginTransaction();
         try {
             $payment->update([
-                'receiver'              => Purify::clean($request->receiver),
-                'date'                  => Purify::clean($request->date),
-                'payment_type'          => Purify::clean($request->payment_type),
+                'receiver'              => $request->receiver,
+                'date'                  => $request->date,
+                'payment_type'          => $request->payment_type,
                 'expense_section_id'    => $request->expense_section_id,
                 'branch_id'             => $request->branch_id,
-                'debit'                 => Purify::clean($request->debit),
-                'note'                  => Purify::clean($request->note),
+                'debit'                 => $request->debit,
+                'note'                  => $request->note,
             ]);
 
             FundAccount::where('payment_id', $payment->id)->update([
-                'date'                  => Purify::clean($request->date),
+                'date'                  => $request->date,
                 'payment_id'            => $payment->id,
-                'credit'                => Purify::clean($request->debit),
-                'note'                  => Purify::clean($request->note),
+                'credit'                => $request->debit,
+                'note'                  => $request->note,
             ]);
 
             DB::commit();
-            toast(trans('site.updated successfully', ['attr' => trans_choice('site.expenses', 0)]),'success');
-            return redirect()->back();
+            
+            $payments = Payment::with('branch', 'expenseSection')->get();
+            $expenseSections = ExpenseSection::get();
+            $branches = Branch::get();
+
+            return response()->json([
+                'paymentsData' => $payments,
+                'expenseSectionsData' => $expenseSections,
+                'branchesData' => $branches
+            ], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->withInput($request->input())->withErrors(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function delete($payment)
     {
-        $payment->delete();
-        toast(trans('site.deleted successfully', ['attr' => trans_choice('site.expenses', 0)]),'error');
-        return redirect()->back();
+        try {
+            $payment->delete();
+
+            $payments = Payment::with('branch', 'expenseSection')->get();
+            $expenseSections = ExpenseSection::get();
+            $branches = Branch::get();
+
+            return response()->json([
+                'paymentsData' => $payments,
+                'expenseSectionsData' => $expenseSections,
+                'branchesData' => $branches
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     public function showReceipt($id)

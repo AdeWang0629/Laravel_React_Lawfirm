@@ -3,7 +3,8 @@ import actions from './actions';
 const initialState = {
   branchesData: [],
   trashedData: [],
-  expenseSectionsData: []
+  expenseSectionsData: [],
+  paymentsData: []
 }
 
 function Reducer(state = initialState, action) {
@@ -19,6 +20,13 @@ function Reducer(state = initialState, action) {
         ...state,
         expenseSectionsData: action.payload.expenseSectionsData,
         trashedData: action.payload.trashedData
+      }
+    case actions.GETPAYMENTSSUCESS:
+      return {
+        ...state,
+        paymentsData: action.payload.paymentsData,
+        expenseSectionsData: action.payload.expenseSectionsData,
+        branchesData: action.payload.branchesData
       }
     default:
       return state

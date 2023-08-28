@@ -92,6 +92,49 @@ function* deleteExpenseSections(action) {
     }
 }
 
+function* getPayments() {
+    try{
+        const response = yield call(() => getCustomRequest('api/admin/payments'));
+
+        yield put({type:actions.GETPAYMENTSSUCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* createPayments(action) {
+    try{
+        const response = yield call(() => postCustomRequest('api/admin/payments', action.payload));
+
+        toast.success("Payments Creating was successful.");
+        yield put({type:actions.GETPAYMENTSSUCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* updatePayments(action) {
+    try{
+        const response = yield call(() => putCustomRequest('api/admin/payments', action.id, action.payload));
+
+        toast.success("Payments Updating was successful.");
+        yield put({type:actions.GETPAYMENTSSUCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
+function* deletePayments(action) {
+    try{
+        const response = yield call(() => deleteCustomRequest('api/admin/payments', action.payload));
+
+        toast.success("Payments deleting was successful.");
+        yield put({type:actions.GETPAYMENTSSUCESS, payload:response.data});
+    } catch(error){
+        toast.error(error.response.data.message);
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeLatest(actions.GETBRANCHES, getBranches)]);
     yield all([takeLatest(actions.CREATEBRANCHES, createBranches)]);
@@ -101,4 +144,8 @@ export default function* rootSaga() {
     yield all([takeLatest(actions.CREATEEXPENSESECTIONS, createExpenseSections)]);
     yield all([takeLatest(actions.UPDATEEXPENSESECTIONS, updateExpenseSections)]);
     yield all([takeLatest(actions.DELETEEXPENSESECTIONS, deleteExpenseSections)]);
+    yield all([takeLatest(actions.GETPAYMENTS, getPayments)]);
+    yield all([takeLatest(actions.CREATEPAYMENTS, createPayments)]);
+    yield all([takeLatest(actions.UPDATEPAYMENTS, updatePayments)]);
+    yield all([takeLatest(actions.DELETEPAYMENTS, deletePayments)]);
 }

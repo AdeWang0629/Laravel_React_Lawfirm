@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\Admin\CaseSessionController;
 use App\Http\Controllers\Api\Admin\ConsultationController;
 use App\Http\Controllers\Api\Admin\BranchController;
 use App\Http\Controllers\Api\Admin\ExpenseSectionController;
+use App\Http\Controllers\Api\Admin\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,5 +108,9 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::delete('expense-sections/{expense_section}/force-delete', 'ExpenseSectionController@forceDelete')->name('expense-sections.force.delete');
         Route::get('expense-sections/trashed', 'ExpenseSectionController@trashed')->name('expense-sections.trashed');
         Route::resource('expense-sections', ExpenseSectionController::class)->except(['create','show','edit']);
-    });
+
+        //start PaymentController
+        Route::resource('payments', PaymentController::class)->except(['create','show','edit']);
+        Route::get('payments/receipt/{id}', 'PaymentController@showReceipt')->name('get.payment.receipt');
+        });
 });

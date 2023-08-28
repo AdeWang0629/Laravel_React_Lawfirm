@@ -152,4 +152,9 @@ export default [
     component: lazy(() => import('../pages/admin/Expenses/ExpenseSections')),
     exact: true,
   },
+  {
+    path: 'payments',
+    component: lazy(() => import('../pages/admin/Expenses/Payments')),
+    exact: true,
+  },
 ]
