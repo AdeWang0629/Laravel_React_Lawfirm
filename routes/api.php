@@ -113,4 +113,12 @@ Route::group(['middleware' => 'jwt_auth'], function() {
         Route::resource('payments', PaymentController::class)->except(['create','show','edit']);
         Route::get('payments/receipt/{id}', 'PaymentController@showReceipt')->name('get.payment.receipt');
         });
+
+        //start ReportsController
+        Route::get('sessions-reports', [App\Http\Controllers\Api\Admin\ReportsController::class,'sessionsReports'])->name('sessions.reports');
+        Route::get('lawsuites-reports', 'ReportsController@lawsuitesReports')->name('lawsuites.reports');
+        Route::get('clients-reports', 'ReportsController@clientsReports')->name('clients.reports');
+        Route::get('lawsuites-payments-reports', 'ReportsController@lawsuitesPaymentsReports')->name('lawsuites.payments.reports');
+        Route::get('consultations-payments-reports', 'ReportsController@consultationsPaymentsReports')->name('consultations.payments.reports');
+        Route::get('payments-reports', 'ReportsController@paymentsReports')->name('payments.reports');
 });

@@ -157,4 +157,9 @@ export default [
     component: lazy(() => import('../pages/admin/Expenses/Payments')),
     exact: true,
   },
+  {
+    path: 'sessions-reports',
+    component: lazy(() => import('../pages/admin/Reports/SessionReports')),
+    exact: true,
+  },
 ]

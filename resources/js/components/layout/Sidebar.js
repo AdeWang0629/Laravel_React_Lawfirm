@@ -60,7 +60,8 @@ export default function Sidebar({open}) {
     '/receipts/consultations',
     '/branches',
     '/expense-sections',
-    '/payments'
+    '/payments',
+    '/sessions-reports'
   ];
 
   const user = JSON.parse(localStorage.getItem('user'));

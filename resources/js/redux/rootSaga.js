@@ -8,6 +8,7 @@ import lawsuiteSaga from './Admin/Lawsuite/apiSaga';
 import caseSessionSaga from './Admin/CaseSession/apiSaga';
 import consultationSaga from './Admin/Consultation/apiSaga';
 import expensesSaga from './Admin/Expenses/apiSaga';
+import reportsSaga from './Admin/Reports/apiSaga';
 
 // Here you can include all the saga which you write for components
 export default function* rootSaga(){
@@ -20,6 +21,7 @@ export default function* rootSaga(){
     lawsuiteSaga(),
     caseSessionSaga(),
     consultationSaga(),
-    expensesSaga()
+    expensesSaga(),
+    reportsSaga()
   ]);
 }

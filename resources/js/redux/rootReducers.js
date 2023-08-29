@@ -7,6 +7,7 @@ import lawsuiteReducer from './Admin/Lawsuite/reducer';
 import caseSessionReducer from './Admin/CaseSession/reducer';
 import consultationReducer from './Admin/Consultation/reducer';
 import expensesReducer from './Admin/Expenses/reducer';
+import reportsReducer from './Admin/Reports/reducer';
 
 //Include all the reducer to combine and provide to configure store.
 export default {
@@ -18,5 +19,6 @@ export default {
   lawsuiteReducer,
   caseSessionReducer,
   consultationReducer,
-  expensesReducer
+  expensesReducer,
+  reportsReducer
 }
